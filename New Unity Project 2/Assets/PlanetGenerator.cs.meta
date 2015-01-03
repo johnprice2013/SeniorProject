@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 9e47ac6e1ac3d544b990d5250c8df98b
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - planet: {fileID: 400000, guid: 098de2ac0d76f7b448b5230d81c3d9a0, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
