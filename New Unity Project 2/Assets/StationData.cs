@@ -11,9 +11,11 @@ public class StationData : MonoBehaviour {
 	public GameObject enemyArea;
 	public bool initiateEnemyStrike = true;
 	public GameObject enemyAreaInstance;
+	public bool notAbandoned = true;
 	// Use this for initialization
 	void Start () {
-
+		if(notAbandoned)
+		{
 		for(int x = 0; x < 4; x++)
 		{
 			GameObject newObject = (GameObject) Instantiate (mission);
@@ -23,7 +25,7 @@ public class StationData : MonoBehaviour {
 
 
 		}
-	
+		}
 	}
 
 	public void createEnemyStrike()

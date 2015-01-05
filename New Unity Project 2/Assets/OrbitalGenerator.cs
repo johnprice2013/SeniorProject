@@ -9,6 +9,7 @@ public class OrbitalGenerator : MonoBehaviour {
 	public GameObject station;
 	public int stationSeed = 0;
 	public GameObject planetStation;
+	public GameObject abandonedStation;
 	// Use this for initialization
 	void Start () {
 	
@@ -21,9 +22,10 @@ public class OrbitalGenerator : MonoBehaviour {
 		stationChoice = Random.Range (0,5);
 		if(stationChoice == 0)
 		{
-			planetStation = (GameObject)Instantiate (station, new Vector3(20000+GetComponent<PlanetMovement>().planetRadius,0,0) + transform.position, Quaternion.identity);
+			planetStation = (GameObject)Instantiate (abandonedStation, new Vector3(20000+GetComponent<PlanetMovement>().planetRadius,0,0) + transform.position, Quaternion.identity);
 			planetStation.GetComponent<StationData>().stationSeed = stationSeed;
 			planetStation.GetComponent<StationData>().stationPlanet = (GameObject)this.gameObject;
+			planetStation.GetComponent<StationData>().notAbandoned = false;
 			planetStation.GetComponent<StationMovement>().parent = (GameObject)this.gameObject;
 			GetComponent<PlanetInfo>().hasAbandonedStation = true;
 		}

@@ -108,8 +108,10 @@
      <Compile Include="Assets\lowerFighter.cs" />
      <Compile Include="Assets\lowerSelf.cs" />
      <Compile Include="Assets\movement.cs" />
+     <Compile Include="Assets\movementmaker.cs" />
+     <Compile Include="Assets\roomspawner.cs" />
  <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>C:/Users/John/Documents/New Unity Project 2/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ <HintPath>C:/Users/John/Documents/GitHub/SeniorProject/New Unity Project 2/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>

@@ -108,6 +108,8 @@
      <Compile Include="Assets\lowerFighter.cs" />
      <Compile Include="Assets\lowerSelf.cs" />
      <Compile Include="Assets\movement.cs" />
+     <Compile Include="Assets\movementmaker.cs" />
+     <Compile Include="Assets\roomspawner.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>

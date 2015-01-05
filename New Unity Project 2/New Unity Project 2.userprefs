@@ -1,12 +1,18 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AsteroidMesher.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\roomspawner.cs">
     <Files>
-      <File FileName="Assets\movement.cs" Line="133" Column="36" />
-      <File FileName="Assets\PlanetInfoUI.cs" Line="59" Column="15" />
-      <File FileName="Assets\ShowDetails.cs" Line="35" Column="4" />
-      <File FileName="Assets\MiningDroneScript.cs" Line="44" Column="102" />
-      <File FileName="Assets\AsteroidMesher.cs" Line="7" Column="18" />
+      <File FileName="Assets\roomspawner.cs" Line="36" Column="54" />
+      <File FileName="Assets\StationMaker.cs" Line="1" Column="1" />
+      <File FileName="Assets\StationData.cs" Line="14" Column="34" />
+      <File FileName="Assets\StationMovement.cs" Line="70" Column="1" />
+      <File FileName="Assets\LocalPlanet.cs" Line="1" Column="1" />
+      <File FileName="Assets\lowerFighter.cs" Line="1" Column="1" />
+      <File FileName="Assets\lowerSelf.cs" Line="1" Column="1" />
+      <File FileName="Assets\movementmaker.cs" Line="1" Column="1" />
+      <File FileName="Assets\OrbitalGenerator.cs" Line="28" Column="67" />
+      <File FileName="Assets\OpenCloseRight.cs" Line="1" Column="1" />
+      <File FileName="Assets\movement.cs" Line="161" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
