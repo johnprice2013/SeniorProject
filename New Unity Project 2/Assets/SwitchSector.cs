@@ -94,6 +94,10 @@ public class SwitchSector : MonoBehaviour {
 			{
 				DestroyImmediate (station);
 			}
+			foreach(GameObject abandonedStation in GameObject.FindGameObjectsWithTag("AbandonedStation"))
+			{
+				DestroyImmediate(abandonedStation);
+			}
 			movement starMov = star.GetComponent<movement>();
 			savedX = starMov.totalAccel.x;
 			savedY = starMov.totalAccel.y;

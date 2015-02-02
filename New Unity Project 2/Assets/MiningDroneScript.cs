@@ -41,11 +41,11 @@ public class MiningDroneScript : MonoBehaviour {
 		}
 		else if(movingToShip)
 		{
-			transform.Translate ((parent.transform.position - transform.position) * Time.deltaTime,Space.World);// * distanceToAsteroid);
+			transform.Translate (((parent.transform.position+new Vector3(0f,-1.5f,14f)) - transform.position) * Time.deltaTime,Space.World);// * distanceToAsteroid);
 		}
 		else
 		{
-			this.transform.position = parent.transform.position;
+			this.transform.position = (parent.transform.position+new Vector3(0f,-1.5f,14f));
 		}
 
 

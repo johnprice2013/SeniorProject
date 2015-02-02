@@ -128,7 +128,24 @@ public class PlayerMovementInShip : MonoBehaviour {
 
 	public bool IsGrounded()
 	{
-			return Physics.Raycast(transform.position, -transform.up, 1f);
+		RaycastHit myHit;
+		if(Physics.Raycast (transform.position,-transform.up, out myHit,1f))
+		   {
+			if(!myHit.collider.isTrigger)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+			}
+			else
+		{
+			return false;
+		}
+		//return Physics.Raycast(transform.position, -transform.up, 1f);
 	}
 
 

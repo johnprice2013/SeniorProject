@@ -1,0 +1,10 @@
+4
+:
+Chair,10,50
+:
+Old Rusty Book,15,40
+:
+Gold,150,5
+:
+Awesome Panda,12,55
+

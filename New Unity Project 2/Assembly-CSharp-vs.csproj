@@ -50,9 +50,11 @@
      <Compile Include="Assets\AsteroidMesher.cs" />
      <Compile Include="Assets\Asteroids.cs" />
      <Compile Include="Assets\CameraClipping.cs" />
+     <Compile Include="Assets\ColliderHandler.cs" />
      <Compile Include="Assets\CurrencyDisplay.cs" />
      <Compile Include="Assets\DisplayLocation.cs" />
      <Compile Include="Assets\DockBayController.cs" />
+     <Compile Include="Assets\DockingScript.cs" />
      <Compile Include="Assets\EnemyShipAI.cs" />
      <Compile Include="Assets\EnemySpawner.cs" />
      <Compile Include="Assets\FighterController.cs" />
@@ -64,6 +66,8 @@
      <Compile Include="Assets\InitializeGhostStar.cs" />
      <Compile Include="Assets\InitializeGhostStation.cs" />
      <Compile Include="Assets\InventoryScript.cs" />
+     <Compile Include="Assets\Item.cs" />
+     <Compile Include="Assets\ItemListInitializer.cs" />
      <Compile Include="Assets\LaserMovement.cs" />
      <Compile Include="Assets\LocalPlanet.cs" />
      <Compile Include="Assets\Menu.cs" />
@@ -79,6 +83,7 @@
      <Compile Include="Assets\OrbitalGenerator.cs" />
      <Compile Include="Assets\Ore.cs" />
      <Compile Include="Assets\OreInfoScript.cs" />
+     <Compile Include="Assets\OuterDoorOpen.cs" />
      <Compile Include="Assets\Perlin.cs" />
      <Compile Include="Assets\PlanetButtonInfo.cs" />
      <Compile Include="Assets\PlanetGenerator.cs" />
@@ -92,12 +97,15 @@
      <Compile Include="Assets\SectorGenerator.cs" />
      <Compile Include="Assets\SectorStorage.cs" />
      <Compile Include="Assets\ShipController.cs" />
+     <Compile Include="Assets\ShipDoorOpen.cs" />
      <Compile Include="Assets\ShipInventoryScript.cs" />
      <Compile Include="Assets\ShowDetails.cs" />
      <Compile Include="Assets\StarFieldGenerator.cs" />
      <Compile Include="Assets\StarGenerator.cs" />
      <Compile Include="Assets\StarInit.cs" />
+     <Compile Include="Assets\StationColliderHandler.cs" />
      <Compile Include="Assets\StationData.cs" />
+     <Compile Include="Assets\StationGenerationTest.cs" />
      <Compile Include="Assets\StationMaker.cs" />
      <Compile Include="Assets\StationMovement.cs" />
      <Compile Include="Assets\SwitchSector.cs" />

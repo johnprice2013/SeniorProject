@@ -42,12 +42,15 @@ public class movement : MonoBehaviour {
 	public Initialize playerInit;
 	public PlanetInfoUI deets;
 	public GameObject planetHolder;
+	public bool docking = false;
+	public ShipController shipControl;
 
 	// Use this for initialization
 	void Start () {
 		speed = 500f;
 		G = .1f;
 		player = GameObject.FindGameObjectWithTag("Player");
+		shipControl = player.GetComponent<ShipController>();
 		SwitchSector secSwitch = player.GetComponent<SwitchSector>();
 		totalAccel.x = secSwitch.savedX;
 		totalAccel.y = secSwitch.savedY;
@@ -137,9 +140,14 @@ public class movement : MonoBehaviour {
 			
 		if(hasMoved == false)
 			{
-				telePosition = 
+					telePosition = Vector3.zero;
+					Vector3 teleOffset = new Vector3(100000f,0f,0f);
+						if(deets.orbitals[planetJumpNum].transform.name == "Asteroids(Clone)")
+					{
+						teleOffset = new Vector3(500f,0f,0f);
+					}
 					//Debug.Log (deets.planets.Length);//.transform.position + new Vector3(100000f,0f,0f));
-				telePosition = -deets.orbitals[planetJumpNum].transform.position + new Vector3(100000f,0f,0f);
+				telePosition = -deets.orbitals[planetJumpNum].transform.position + teleOffset;
 				trueX += telePosition.x;
 				trueY += telePosition.y;
 				trueZ += telePosition.z;
@@ -198,8 +206,31 @@ public class movement : MonoBehaviour {
 		forceFromStar = ((G*starMass)/Mathf.Pow(distanceToPlayer,2f)) * directionToPlayer.normalized; 
 		newVector *= Time.deltaTime;
 	
+		if(shipControl.docking == false)
+		{
 		totalAccel += newVector*Time.deltaTime + forceFromPlanets * Time.deltaTime;
-	
+		}
+		if(shipControl.docking == true)// && shipControl.docked == false)
+		{
+			//shipControl.inControl = false;
+			shipControl.disableControl();
+			totalAccel = Vector3.zero;
+			if(shipControl.distanceToDock.magnitude < 3f)
+			{
+				totalAccel += -shipControl.distanceToDock;
+				shipControl.docked = true;
+				//Debug.Log ("tight dock");
+			}
+			else
+			{
+			totalAccel += -shipControl.distanceToDock * (1/(1+((shipControl.distanceToDock.magnitude*(Time.deltaTime*50)))));
+			}
+		}
+		if(shipControl.docked == true)
+		{
+			//shipControl.inControl = false;
+		//	totalAccel += -shipControl.distanceToDock;
+		}
 		trueX += totalAccel.x;
 		trueY += totalAccel.y;
 		trueZ += totalAccel.z;
