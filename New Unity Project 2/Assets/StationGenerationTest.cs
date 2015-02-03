@@ -133,7 +133,7 @@ public class StationGenerationTest : MonoBehaviour {
 			y += floorHeight;
 
 		}
-		this.gameObject.SetActive(false);// = false;
+	//	this.gameObject.SetActive(false);// = false;
 		//Debug.Log ("awesome");
 		//Debug.Log (this.transform.FindChild("StationShell(Clone)").transform.position);
 		//this.transform.FindChild ("StationShell(Clone)").transform.FindChild("ASDockingPort").gameObject.SetActive(true);

@@ -1,10 +1,20 @@
-4
+9
 :
 Chair,10,50
 :
 Old Rusty Book,15,40
 :
-Gold,150,5
+Gold Bar,150,5
 :
-Awesome Panda,12,55
+Cigarettes,12,55
+:
+Old Earth Cash,25,100
+:
+Antique Statue,50,10
+:
+Diary,10,15
+:
+Family Photo,25,25
+:
+School Textbook,500,10
 
