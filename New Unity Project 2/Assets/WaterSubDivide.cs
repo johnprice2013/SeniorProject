@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+//using UnityEditor;
 
 public class WaterSubDivide : MonoBehaviour {
 
@@ -34,7 +34,7 @@ public class WaterSubDivide : MonoBehaviour {
 			mesh.RecalculateNormals();
 		mesh.RecalculateBounds();
 		//(PrefabUtility)
-		AssetDatabase.CreateAsset(mesh,"Assets/HighPolySphere.Asset");
+		//AssetDatabase.CreateAsset(mesh,"Assets/HighPolySphere.Asset");
 	}
 	
 	// Update is called once per frame

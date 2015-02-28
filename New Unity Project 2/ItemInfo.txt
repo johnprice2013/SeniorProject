@@ -1,4 +1,4 @@
-9
+10
 :
 Chair,10,50
 :
@@ -8,7 +8,7 @@ Gold Bar,150,5
 :
 Cigarettes,12,55
 :
-Old Earth Cash,25,100
+Old Earth Cash,25,300
 :
 Antique Statue,50,10
 :
@@ -17,4 +17,6 @@ Diary,10,15
 Family Photo,25,25
 :
 School Textbook,500,10
+:
+thing,2,5
 

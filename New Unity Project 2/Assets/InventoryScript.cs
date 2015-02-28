@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class InventoryScript : MonoBehaviour {
+public abstract class InventoryScript : MonoBehaviour {
 	
 	public float weightLimit = 40000;
 	public float sizeLimit = 40000;
@@ -26,6 +26,11 @@ public class InventoryScript : MonoBehaviour {
 		Debug.Log (singleItem.name);
 		items.Add(singleItem);
 		recalculateWeightOnce(singleItem.weight);
+	}
+
+	public void removeSingleItem(Item singleItem)
+	{
+
 	}
 
 
@@ -52,3 +57,8 @@ public class InventoryScript : MonoBehaviour {
 	}
 
 }
+
+
+
+
+

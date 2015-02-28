@@ -18,6 +18,7 @@ public class ShipController : MonoBehaviour {
 	public Vector3 distanceToDock;
 	public GameObject shipDockPoint;
 	public bool docked = false;
+	public bool linedUp = false;
 	// Use this for initialization
 	void Start () {
 		cameras = GetComponentsInChildren<Camera>();
@@ -39,20 +40,23 @@ public class ShipController : MonoBehaviour {
 				//When in enemy range, make enemy area a child of the ship, that way
 			//the enemies will keep pace with player.  This data can be sent to servers as well.
 		}
+		distanceToDock = getDistanceToDock();
 
-		if(dockingObject != null)
-		{
-			distanceToDock = dockingObject.transform.position-shipDockPoint.transform.position - new Vector3(-.35f,0f,0f);
-		}
 		if(docking)
 		{
+			Vector3 quickV = this.transform.localEulerAngles;
 			//this.GetComponent<MouseLook>().enabled = false;
 //			Debug.Log ("making it here");
-			if(((dockingObject.transform.rotation.eulerAngles - (this.transform.rotation.eulerAngles - new Vector3(0f,90f,0f))).magnitude) < 1f)
+			if((quickV.y < 270.5 && quickV.y > 269.5) && (quickV.x < .5 || quickV.x > 359.5) && (quickV.z < .5 || quickV.z > 359.5))
 			{
-				this.transform.localRotation = dockingObject.transform.localRotation;
-//				Debug.Log ("lined up");
+				//this.transform.localRotation = dockingObject.transform.localRotation;
+				this.transform.localEulerAngles = new Vector3(0f,270f,0f);
+				linedUp = true;
+				//Debug.Log (this.transform.localRotation);
+				//Debug.Log (dockingObject.transform.localRotation);
+				//Debug.Log ("lined up");
 			}
+		
 			else
 			{
 				Vector3 myV = this.transform.localEulerAngles;
@@ -113,6 +117,7 @@ public class ShipController : MonoBehaviour {
 					}
 				}
 				this.transform.localEulerAngles = myV;
+				linedUp = false;
 			}
 			
 		}
@@ -202,6 +207,16 @@ public class ShipController : MonoBehaviour {
 		GameObject.FindGameObjectWithTag("PlayerBody").GetComponent<Initialize>().piloting = false;
 	}
 
+
+	public Vector3 getDistanceToDock()
+	{
+		if(dockingObject != null)
+		{
+			return shipDockPoint.transform.position - dockingObject.transform.position;// - new Vector3(-.35f,0f,0f);
+		}
+		else
+			return Vector3.zero;
+	}
 
 
 	public IEnumerator switchCameraPause()

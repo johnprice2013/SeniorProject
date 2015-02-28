@@ -74,6 +74,11 @@ public class PlanetInfoUI : MonoBehaviour {
 				orbitals[tempNum] = planet;
 				tempNum++;
 			}
+			foreach(var planet in GameObject.FindGameObjectsWithTag("station"))
+			{
+				orbitals[tempNum] = planet;
+				tempNum++;
+			}
 
 			numberOfUpdates++;
 		}

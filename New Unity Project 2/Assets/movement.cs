@@ -146,6 +146,10 @@ public class movement : MonoBehaviour {
 					{
 						teleOffset = new Vector3(500f,0f,0f);
 					}
+					else if(deets.orbitals[planetJumpNum].transform.name == "station(Clone)")
+					{
+						teleOffset = new Vector3(100f,0f,0f);
+					}
 					//Debug.Log (deets.planets.Length);//.transform.position + new Vector3(100000f,0f,0f));
 				telePosition = -deets.orbitals[planetJumpNum].transform.position + teleOffset;
 				trueX += telePosition.x;
@@ -208,24 +212,30 @@ public class movement : MonoBehaviour {
 	
 		if(shipControl.docking == false)
 		{
+			forceFromPlanets =  Vector3.zero; // undo if unsuccessful;
 		totalAccel += newVector*Time.deltaTime + forceFromPlanets * Time.deltaTime;
 		}
 		if(shipControl.docking == true)// && shipControl.docked == false)
 		{
+			//Debug.Log ("CAlling");
 			//shipControl.inControl = false;
 			shipControl.disableControl();
 			totalAccel = Vector3.zero;
-			if(shipControl.distanceToDock.magnitude < 3f)
+			if(shipControl.getDistanceToDock().magnitude < 3f)
 			{
-				totalAccel += -shipControl.distanceToDock;
+				totalAccel += shipControl.getDistanceToDock();
 				shipControl.docked = true;
+				//Debug.Log ("Really close" + totalAccel);
 				//Debug.Log ("tight dock");
 			}
 			else
 			{
-			totalAccel += -shipControl.distanceToDock * (1/(1+((shipControl.distanceToDock.magnitude*(Time.deltaTime*50)))));
+				totalAccel += shipControl.getDistanceToDock() * (1/(1+((shipControl.getDistanceToDock().magnitude*(Time.deltaTime*50)))));
+				//Debug.Log (shipControl.getDistanceToDock());
+				//Debug.Log ("adding " + totalAccel);
 			}
 		}
+
 		if(shipControl.docked == true)
 		{
 			//shipControl.inControl = false;
@@ -244,6 +254,7 @@ public class movement : MonoBehaviour {
 			tempTime = 0f;
 		}
 		transform.Translate(totalAccel);
+		//Debug.Log (totalAccel);
 	
 	}
 	public IEnumerator jumpWait()

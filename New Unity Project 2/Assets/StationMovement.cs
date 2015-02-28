@@ -60,13 +60,17 @@ public class StationMovement : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		
+		GameObject player = GameObject.Find ("ShipInterior");
 
+		if(parent != null)
+		{
+			if(!player.GetComponent<ShipController>().docked || !player.GetComponent<ShipController>().linedUp)
+			{
 		tempMovTime += (double)Time.deltaTime;
 		
-	
+			tempMovTime = 0;  //remove if unsuccessful;
 		totalMovTime = neededRotation * tempMovTime;
-	
+//				Debug.Log ("stationMoving");
 		planetPosition = parent.transform.position;
 		trueX = planMov.tempX + (double) distanceFromPlanet * System.Math.Sin (totalMovTime);
 		trueY = planMov.tempY + (double) distanceFromPlanet * System.Math.Cos (totalMovTime);
@@ -96,6 +100,10 @@ public class StationMovement : MonoBehaviour {
 		transform.Translate(deltaPosition);
 		distanceToPlayer = transform.position.magnitude;
 		realDistance = (transform.position - parent.transform.position).magnitude;
-
+		
+		}
+		}
+		//Debug.Log ("station " + deltaPosition);
+		//Debug.Log (player.GetComponent<ShipController>().getDistanceToDock() + "distance to docck");
 	}
 }

@@ -164,7 +164,7 @@ public class PlanetMovement : MonoBehaviour {
 		newYPosition = (float)tempY;
 		newZPosition = (float)tempZ;
 		newFullPosition = new Vector3(newXPosition,newYPosition,newZPosition);
-		
+
 		deltaPosition = newFullPosition-transform.position;
 		transform.Translate(deltaPosition,Space.World);
 		
@@ -201,9 +201,11 @@ public class PlanetMovement : MonoBehaviour {
 
 		deltaPosition = newFullPosition-transform.position;
 
+		//Debug.Log (deltaPosition);
 		transform.Translate(deltaPosition,Space.World);
 		newDelta += Time.deltaTime;
 		tempVelocity += deltaPosition.magnitude;
+		//Debug.Log ("planet" + deltaPosition);
 		if(newDelta > 1f)
 		{
 			displayVelocity = tempVelocity;

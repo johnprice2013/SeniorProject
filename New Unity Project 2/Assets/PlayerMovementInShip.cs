@@ -131,7 +131,7 @@ public class PlayerMovementInShip : MonoBehaviour {
 		RaycastHit myHit;
 		if(Physics.Raycast (transform.position,-transform.up, out myHit,1f))
 		   {
-			if(!myHit.collider.isTrigger)
+			if(myHit.collider != null)//!myHit.collider.isTrigger)
 			{
 				return true;
 			}

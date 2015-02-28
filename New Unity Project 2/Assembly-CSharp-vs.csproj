@@ -46,11 +46,18 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ASObjectTypePicker.cs" />
+     <Compile Include="Assets\ASRoomBuilder.cs" />
+     <Compile Include="Assets\ASRoomObject.cs" />
      <Compile Include="Assets\AsteroidInfo.cs" />
      <Compile Include="Assets\AsteroidMesher.cs" />
      <Compile Include="Assets\Asteroids.cs" />
+     <Compile Include="Assets\BigItemHider.cs" />
      <Compile Include="Assets\CameraClipping.cs" />
      <Compile Include="Assets\ColliderHandler.cs" />
+     <Compile Include="Assets\ContainerGUIBehavior.cs" />
+     <Compile Include="Assets\ContainerInventory.cs" />
+     <Compile Include="Assets\ContainerLootableCheck.cs" />
      <Compile Include="Assets\CurrencyDisplay.cs" />
      <Compile Include="Assets\DisplayLocation.cs" />
      <Compile Include="Assets\DockBayController.cs" />
@@ -59,7 +66,12 @@
      <Compile Include="Assets\EnemySpawner.cs" />
      <Compile Include="Assets\FighterController.cs" />
      <Compile Include="Assets\FighterMovement.cs" />
+     <Compile Include="Assets\FlashLightScript.cs" />
+     <Compile Include="Assets\FurnishPoolMaker.cs" />
+     <Compile Include="Assets\FurnishingsList.cs" />
      <Compile Include="Assets\GravityFromPlanet.cs" />
+     <Compile Include="Assets\HandleTriggerRenderStation.cs" />
+     <Compile Include="Assets\IInventory.cs" />
      <Compile Include="Assets\Initialize.cs" />
      <Compile Include="Assets\InitializeGhostPlanet.cs" />
      <Compile Include="Assets\InitializeGhostSector.cs" />
@@ -77,6 +89,8 @@
      <Compile Include="Assets\MissionInfo.cs" />
      <Compile Include="Assets\MissionMenuInteract.cs" />
      <Compile Include="Assets\MissionMenuPlayerInteract.cs" />
+     <Compile Include="Assets\MonsterAI.cs" />
+     <Compile Include="Assets\MonsterState.cs" />
      <Compile Include="Assets\NewMeshEditor.cs" />
      <Compile Include="Assets\OpenCloseLeft.cs" />
      <Compile Include="Assets\OpenCloseRight.cs" />
@@ -91,8 +105,11 @@
      <Compile Include="Assets\PlanetInfoUI.cs" />
      <Compile Include="Assets\PlanetMovement.cs" />
      <Compile Include="Assets\PlanetTargetScript.cs" />
+     <Compile Include="Assets\PlayerInventory.cs" />
      <Compile Include="Assets\PlayerMovementInShip.cs" />
+     <Compile Include="Assets\PromptCanvasScript.cs" />
      <Compile Include="Assets\RelativeDistanceInfo.cs" />
+     <Compile Include="Assets\RoomFurnishCreate.cs" />
      <Compile Include="Assets\SaveGame.cs" />
      <Compile Include="Assets\SectorGenerator.cs" />
      <Compile Include="Assets\SectorStorage.cs" />
@@ -100,11 +117,13 @@
      <Compile Include="Assets\ShipDoorOpen.cs" />
      <Compile Include="Assets\ShipInventoryScript.cs" />
      <Compile Include="Assets\ShowDetails.cs" />
+     <Compile Include="Assets\SpawnMonster.cs" />
      <Compile Include="Assets\StarFieldGenerator.cs" />
      <Compile Include="Assets\StarGenerator.cs" />
      <Compile Include="Assets\StarInit.cs" />
      <Compile Include="Assets\StationColliderHandler.cs" />
      <Compile Include="Assets\StationData.cs" />
+     <Compile Include="Assets\StationDoorScript.cs" />
      <Compile Include="Assets\StationGenerationTest.cs" />
      <Compile Include="Assets\StationMaker.cs" />
      <Compile Include="Assets\StationMovement.cs" />
@@ -118,6 +137,13 @@
      <Compile Include="Assets\movement.cs" />
      <Compile Include="Assets\movementmaker.cs" />
      <Compile Include="Assets\roomspawner.cs" />
+     <None Include="Assets\Locker_room_props\readme.txt" />
+     <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\MobileBloom.shader" />
+     <None Include="Assets\Monster2\Shaders\specillumShader.shader" />
+     <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ContrastComposite.shader" />
+     <None Include="Assets\Monster2\Shaders\bumpspecmap.shader" />
+     <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\SeparableBlur.shader" />
+     <None Include="Assets\Monster2\Shaders\monsterShader.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>C:/Users/John/Documents/GitHub/SeniorProject/New Unity Project 2/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>

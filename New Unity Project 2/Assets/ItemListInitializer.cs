@@ -20,7 +20,7 @@ public class ItemListInitializer : MonoBehaviour {
 
 		//for debug purposes
 
-		myInventory = GameObject.Find("Inventory").GetComponent<InventoryScript>();
+	//	myInventory = GameObject.Find("Inventory").GetComponent<InventoryScript>();
 
 		//Debug.Log ("Reading ore details from file");
 		Debug.Log ("running");
@@ -55,8 +55,8 @@ public class ItemListInitializer : MonoBehaviour {
 			items[x].rarity = System.Convert.ToInt32 (itemParts[2]);
 			totalRarity += System.Convert.ToInt32 (itemParts[2]);
 			
-			myInventory.addSingleItem(items[x]);
-			myInventory.addMultipleItems(items[x],2);
+	//		myInventory.addSingleItem(items[x]);
+	//		myInventory.addMultipleItems(items[x],2);
 		}
 		float tempRarity = 0;
 		for(int x = 0; x<items.Length; x++)

@@ -1,9 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\StationMovement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ContainerLootableCheck.cs">
     <Files>
-      <File FileName="Assets\StationGenerationTest.cs" Line="136" Column="4" />
-      <File FileName="Assets\StationMovement.cs" Line="43" Column="1" />
+      <File FileName="Assets\PlayerInventory.cs" Line="18" Column="2" />
+      <File FileName="Assets\ContainerGUIBehavior.cs" Line="36" Column="59" />
+      <File FileName="Assets\ContainerLootableCheck.cs" Line="69" Column="21" />
+      <File FileName="Assets\PromptCanvasScript.cs" Line="3" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
