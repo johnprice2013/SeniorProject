@@ -13,6 +13,7 @@ public class ContainerLootableCheck : MonoBehaviour {
 	public bool inMenu = false;
 	public GameObject prompt;
 	public GameObject realPrompt;
+	public bool waiting = false;
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find ("Capsule");
@@ -41,42 +42,80 @@ public class ContainerLootableCheck : MonoBehaviour {
 			RaycastHit hit;
 			Physics.Raycast (playerCamera.transform.position, playerCamera.transform.forward, out hit);
 			//Debug.Log(hit.transform.name);
-			if(hit.collider.transform.parent.transform.parent.name == this.name)
-			{
-//				Debug.Log ("looking at " + this.name);
-				if(inMenu == false)
+//			if(hit.collider.transform != null)
+//			{
+				if(hit.collider.transform.parent.transform.parent.name == this.name)
 				{
-				realPrompt.SetActive(true);
-					realPrompt.GetComponent<PromptCanvasScript>().setToE();
-				}
-				else
-				{
-					realPrompt.SetActive(false);
-				}
+//					Debug.Log ("looking at " + this.name);
+					if(inMenu == false)
+					{
+					realPrompt.SetActive(true);
+						realPrompt.GetComponent<PromptCanvasScript>().setToE();
+					}
+					else
+					{
+						realPrompt.SetActive(false);
+					}
 
 				//prompt.GetComponent<PromptCanvasScript>().setToE();
 				//prompt.transform.FindChild("Panel").gameObject.renderer.enabled = false;
-				if(Input.GetKey (KeyCode.E) && inMenu == false)
-				{
-					realGUI.SetActive(true);
-					realGUI.GetComponent<ContainerGUIBehavior>().UpdateContainerButtons();
-					realGUI.GetComponent<ContainerGUIBehavior>().UpdatePlayerInvButtons();
-					inMenu = true;
-				}
-				else if(Input.GetKey(KeyCode.E) && inMenu == true)
-				{
-					realGUI.SetActive(false);
-					inMenu = false;
-				}
-				if(Input.GetKey(KeyCode.E) && inMenu == true)
-				{
-					Debug.Log("in menu");
-				}
+					if(Input.GetKey (KeyCode.E) && inMenu == false && waiting == false)
+					{
+					player.GetComponent<PlayerState>().lockCameras();
+					player.GetComponent<PlayerState>().lockRotation();
+						StartCoroutine(menuWait());
+						realGUI.SetActive(true);
+						StartCoroutine(realGUI.GetComponent<ContainerGUIBehavior>().waitAndUpdate());
+						//realGUI.GetComponent<ContainerGUIBehavior>().UpdateContainerButtons();
+					//realGUI.GetComponent<ContainerGUIBehavior>().UpdateContainerButtons();
+						inMenu = true;
+					}
+					else if(Input.GetKey(KeyCode.E) && inMenu == true && waiting == false)
+					{
+					player.GetComponent<PlayerState>().unlockCameras();
+					player.GetComponent<PlayerState>().unlockRotation();
+						StartCoroutine(menuWait());
+							realGUI.GetComponent<ContainerGUIBehavior>().shutDownButtons();
+					//StartCoroutine(realGUI.GetComponent<ContainerGUIBehavior>().deletePlayerButtons());
+					//realGUI.SetActive(false);
+						inMenu = false;
+					}
+						if(Input.GetKey(KeyCode.E) && inMenu == true)
+					{
+//						Debug.Log("in menu");
+					}
+				//}
 			}
 			else
 			{
+				if(Input.GetKey(KeyCode.E) && inMenu == true && waiting == false)
+				{
+					StartCoroutine(menuWait());
+					realGUI.GetComponent<ContainerGUIBehavior>().shutDownButtons();
+					inMenu = false;
+				}
 				realPrompt.SetActive(false);
 			}
 		}
+		else if(inMenu == true)
+		{
+			realGUI.SetActive (false);
+			player.GetComponent<PlayerState>().unlockCameras();
+			player.GetComponent<PlayerState>().unlockRotation();
+			inMenu = false;
+		}
+		else
+		{
+			realPrompt.SetActive(false);
+		}
 	}
+
+	public IEnumerator menuWait()
+	{
+		waiting = true;
+		yield return new WaitForSeconds(.2f);
+		waiting = false;
+	}
+
+
 }

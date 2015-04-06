@@ -5,7 +5,7 @@ public class ShipDoorOpen : MonoBehaviour {
 
 	public GameObject player;
 	public GameObject ship;
-	public ShipController shipCon;
+	public ShipControl shipCon;
 	public bool docking;
 	public float distanceToPlayer;
 	public bool moving = false;
@@ -15,12 +15,12 @@ public class ShipDoorOpen : MonoBehaviour {
 	public float timeElapsed;
 	public Vector3 startPosition;
 	public Vector3 endPosition;
-
+	public bool docked = false;
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("PlayerBody");
 		ship = GameObject.FindGameObjectWithTag("Player");
-		shipCon = ship.GetComponent<ShipController>();
+		shipCon = ship.GetComponent<ShipControl>();
 		startPosition = this.transform.localPosition;
 		endPosition = startPosition - new Vector3(0f, -3f, 0f);
 	}
@@ -28,14 +28,17 @@ public class ShipDoorOpen : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		docking = shipCon.docking;
+		docked = shipCon.docked;
 		distanceToPlayer = (this.transform.position - player.transform.position).magnitude;
-		if(docking && distanceToPlayer < 1.5f && !moving && !open && Input.GetKey(KeyCode.E))
+		if(docked && distanceToPlayer < 1.5f && !moving && !open)// && Input.GetKey(KeyCode.E))
 		{
+			Debug.Log ("opening door");
 			StartCoroutine(openDoor());
 			//Debug.Log ("close enough to open");
 		}
-		else if(docking && distanceToPlayer < 4.5f && !moving && open && Input.GetKey(KeyCode.E))
+		else if(docked && distanceToPlayer > 4.5f && !moving && open)// && Input.GetKey(KeyCode.E))
 		{
+			Debug.Log ("closing door");
 			StartCoroutine(closeDoor());
 		}
 		if(lowering)

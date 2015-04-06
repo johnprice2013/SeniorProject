@@ -71,9 +71,9 @@ public class MonsterStateChasing : MonsterState
 		Physics.Raycast(this.transform.position, dir,out hit, 30);
 		if(hit.transform.name != "Capsule")
 		{
-			Debug.Log (hit.transform.name);
+			//Debug.Log (hit.transform.name);
 			animator.SetBool("chasing", false);
-			Debug.Log ("Chasing, couldn't see player, inv last known");
+			//Debug.Log ("Chasing, couldn't see player, inv last known");
 			this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateInvestigating>();
 			gameObject.GetComponent<MonsterStateInvestigating>().lastKnownPos = player.transform.position;
 			Destroy(this);
@@ -81,7 +81,7 @@ public class MonsterStateChasing : MonsterState
 		else if((player.transform.position - transform.position).magnitude < 1.5)
 		{
 			animator.SetBool ("chasing",false);
-			Debug.Log ("chasing, close to player, attacking");
+			//Debug.Log ("chasing, close to player, attacking");
 			this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateAttacking>();
 			Destroy(this);
 		}
@@ -227,7 +227,7 @@ public class MonsterStateAttacking : MonsterState
 
 public class MonsterStateWandering : MonsterState
 {
-	float speed = 3f;
+	float speed = 	1f;
 	GameObject playerFlashlight;
 	float rotSpeed = 10f;
 	public Vector3 target;
@@ -360,7 +360,7 @@ public class MonsterStateWandering : MonsterState
 			if(hit.point == light.hitPoint)
 			{
 				animator.SetBool ("wandering",false);
-				Debug.Log ("wandering stopped, detected light hit");	
+		//		Debug.Log ("wandering stopped, detected light hit");	
 				this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateInvestigating>();
 				this.GetComponent<MonsterStateInvestigating>().lastKnownPos = light.hitPoint;
 				Destroy(this);
@@ -407,13 +407,13 @@ public class MonsterStateSearching : MonsterState
 		RaycastHit hit;
 		FlashLightScript lightScript = light.GetComponent<FlashLightScript>();
 		Physics.Raycast(this.transform.position, Vector3.forward, out hit, 100f);
-		Debug.Log (hit.distance);
+//		Debug.Log (hit.distance);
 		if(hit.collider != null)
 		{
 		if(hit.collider.transform.name == "Capsule" && lightScript.on == true )
 		{
 			animator.SetBool ("searching",false);
-			Debug.Log ("Searching stopped,  found player");
+		//	Debug.Log ("Searching stopped,  found player");
 			this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateChasing>();
 
 			Destroy(this);
@@ -427,7 +427,7 @@ public class MonsterStateSearching : MonsterState
 			if(hit.point == lightScript.hitPoint)
 			{
 				animator.SetBool ("searching",false);
-				Debug.Log ("Searching stopped,  found light hit");
+		//		Debug.Log ("Searching stopped,  found light hit");
 				this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateInvestigating>();
 				this.GetComponent<MonsterStateInvestigating>().lastKnownPos = lightScript.hitPoint;
 				Destroy(this);
@@ -435,7 +435,7 @@ public class MonsterStateSearching : MonsterState
 			else if(timeSearched > 10f)
 			{
 				animator.SetBool ("searching",false);
-				Debug.Log ("searching stopped, timed out");
+			//	Debug.Log ("searching stopped, timed out");
 				this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateWandering>();
 
 				Destroy(this);

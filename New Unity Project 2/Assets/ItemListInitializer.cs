@@ -6,9 +6,10 @@ using System.IO;
 public class ItemListInitializer : MonoBehaviour {
 	
 	public string fileText = null;
-	public Item[] items = null;
+	public Item[] itemsList = null;
 	public string[] itemParts;
 	public int totalRarity = 0;
+	public GameObject genericItem;
 	//for debug purposes
 
 	public InventoryScript myInventory;
@@ -42,26 +43,26 @@ public class ItemListInitializer : MonoBehaviour {
 	public void parseString(string itemDetails)
 	{
 		var itemArray = itemDetails.Split(':');
-		items = new Item[System.Convert.ToInt32(itemArray[0])];
+		itemsList = new Item[System.Convert.ToInt32(itemArray[0])];
 		
 		for(int x = 0; x< itemArray.Length-1; x++)
 		{
 			
 			itemParts = itemArray[x+1].Split (',');
 			//	Debug.Log (oreParts[0] + " " + oreParts[1] + " " + oreParts[2]);
-			items[x] = this.gameObject.AddComponent<Item>();
-			items[x].name = itemParts[0].Trim();
-			items[x].baseValue = System.Convert.ToInt32(itemParts[1]);
-			items[x].rarity = System.Convert.ToInt32 (itemParts[2]);
+			itemsList[x] = new Item();
+			itemsList[x].name = itemParts[0].Trim();
+			itemsList[x].baseValue = System.Convert.ToInt32(itemParts[1]);
+			itemsList[x].rarity = System.Convert.ToInt32 (itemParts[2]);
 			totalRarity += System.Convert.ToInt32 (itemParts[2]);
 			
 	//		myInventory.addSingleItem(items[x]);
 	//		myInventory.addMultipleItems(items[x],2);
 		}
 		float tempRarity = 0;
-		for(int x = 0; x<items.Length; x++)
+		for(int x = 0; x<itemsList.Length; x++)
 		{
-			items[x].rarity = (int)(tempRarity + ((float)items[x].rarity/(float)totalRarity)*1000f);
+			itemsList[x].rarity = (int)(tempRarity + ((float)itemsList[x].rarity/(float)totalRarity)*1000f);
 			//Debug.Log (ores[x].oreName);
 			
 		}
@@ -69,16 +70,16 @@ public class ItemListInitializer : MonoBehaviour {
 	// Update is called once per frame
 	public Item fetchItem(int passedValue)
 	{
-		Item itemToReturn = null;
+		Item itemToReturn = new Item();
 		float lastRarity = 0f;
-		for(int x = 0; x < items.Length; x++)
+		for(int x = 0; x < itemsList.Length; x++)
 		{
 			
-			if(passedValue >= lastRarity && passedValue <= items[x].rarity + lastRarity)
+			if(passedValue >= lastRarity && passedValue <= itemsList[x].rarity + lastRarity)
 			{
-				itemToReturn = items[x];
+				itemToReturn = itemsList[x];
 			}
-			lastRarity = items[x].rarity + lastRarity;
+			lastRarity = itemsList[x].rarity + lastRarity;
 		}
 		//Debug.Log (passedValue + " " + lastRarity + " " + oreToReturn.oreName);
 		

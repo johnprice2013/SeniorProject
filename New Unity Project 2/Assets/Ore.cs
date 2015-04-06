@@ -8,6 +8,7 @@ public class Ore : MonoBehaviour {
 	public int rarity = 0;
 	public int baseValue = 0;
 	public string oreName;
+	public int count;
 
 
 	//public Ore myOre = new Ore();
@@ -25,6 +26,7 @@ public class Ore : MonoBehaviour {
 		rarity = rare;
 		baseValue = val;
 		oreName = passedName;
+		count = 1;
 	}
 
 

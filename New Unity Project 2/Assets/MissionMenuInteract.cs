@@ -42,6 +42,7 @@ public class MissionMenuInteract : MonoBehaviour {
 		{
 			if(station.GetComponent<StationMovement>().distanceToPlayer < currentClosest)
 			{
+				Debug.Log ("found station");
 				closestStation = station;
 				currentClosest = station.GetComponent<StationMovement>().distanceToPlayer;
 			}

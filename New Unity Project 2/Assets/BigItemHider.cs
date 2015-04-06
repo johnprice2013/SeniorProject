@@ -18,13 +18,13 @@ public class BigItemHider : MonoBehaviour {
 	}
 	void FixedUpdate()
 	{
-		if(transform.position.magnitude > 100000 && hidden == false)
+		if(transform.position.magnitude > 10000000 && hidden == false)
 		{
 			StartCoroutine(disableRenderer(this.transform));
 			hidden = true;
 			visible = false;
 		}
-		else if(transform.position.magnitude < 100000 && hidden == true)
+		else if(transform.position.magnitude < 10000000 && hidden == true)
 		{
 			StartCoroutine(enableRenderer (this.transform));
 			hidden = false;

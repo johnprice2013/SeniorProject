@@ -51,6 +51,7 @@ public class ShipController : MonoBehaviour {
 			{
 				//this.transform.localRotation = dockingObject.transform.localRotation;
 				this.transform.localEulerAngles = new Vector3(0f,270f,0f);
+				Debug.Log ("lined up");
 				linedUp = true;
 				//Debug.Log (this.transform.localRotation);
 				//Debug.Log (dockingObject.transform.localRotation);
@@ -177,6 +178,11 @@ public class ShipController : MonoBehaviour {
 			{
 				mLook.enabled = false;
 			}
+			else
+			{
+				GameObject.FindGameObjectWithTag("PlayerBody").GetComponent<PlayerControl>().piloting = true;
+				mLook.enabled = true;
+			}
 		}
 		else
 		{
@@ -198,13 +204,17 @@ public class ShipController : MonoBehaviour {
 		GetComponent<MouseLook>().enabled = false;
 		
 		disableControl();
-		GameObject.FindGameObjectWithTag("PlayerBody").GetComponent<PlayerMovementInShip>().freeInShip = true;
+		GameObject player = GameObject.FindGameObjectWithTag("PlayerBody");
+		player.GetComponent<PlayerMovementInShip>().freeInShip = true;
 
+		player.GetComponent<PlayerControl>().state = player.gameObject.AddComponent<PlayerStateFree>();  
+		//player.GetComponent<PlayerControl>().state.enableCameras();
+		Destroy(GameObject.FindGameObjectWithTag("PlayerBody").GetComponent<PlayerStatePilotingShip>());
 	}
 
 	public void disableControl()
 	{
-		GameObject.FindGameObjectWithTag("PlayerBody").GetComponent<Initialize>().piloting = false;
+		GameObject.FindGameObjectWithTag("PlayerBody").GetComponent<PlayerControl>().piloting = false;
 	}
 
 

@@ -40,24 +40,24 @@ public class movement : MonoBehaviour {
 	public int planetJumpNum = 0;
 	public GameObject playerBody;
 	public Initialize playerInit;
+	public PlayerControl playerCont;
 	public PlanetInfoUI deets;
 	public GameObject planetHolder;
 	public bool docking = false;
-	public ShipController shipControl;
+	public ShipControl shipCont;
 
 	// Use this for initialization
 	void Start () {
 		speed = 500f;
 		G = .1f;
 		player = GameObject.FindGameObjectWithTag("Player");
-		shipControl = player.GetComponent<ShipController>();
 		SwitchSector secSwitch = player.GetComponent<SwitchSector>();
 		totalAccel.x = secSwitch.savedX;
 		totalAccel.y = secSwitch.savedY;
 		totalAccel.z = secSwitch.savedZ;
 		playerBody = GameObject.FindGameObjectWithTag("PlayerBody");
 		playerInit = playerBody.GetComponent<Initialize>();
-
+		playerCont = playerBody.GetComponent<PlayerControl>();
 
 		light.transform.LookAt(player.transform); 
 
@@ -87,6 +87,7 @@ public class movement : MonoBehaviour {
 	}
 	void FixedUpdate()
 	{
+		shipCont = player.GetComponent<ShipControl>();
 		dTime = Time.deltaTime;
 
 		deets = planetHolder.GetComponent<PlanetInfoUI>();
@@ -97,7 +98,7 @@ public class movement : MonoBehaviour {
 	
 
 
-		if(playerInit.piloting == true)
+		if(playerCont.piloting == true)
 		{
 		if(Input.GetKey(KeyCode.A))
 		{
@@ -149,6 +150,10 @@ public class movement : MonoBehaviour {
 					else if(deets.orbitals[planetJumpNum].transform.name == "station(Clone)")
 					{
 						teleOffset = new Vector3(100f,0f,0f);
+					}
+					else if(deets.orbitals[planetJumpNum].transform.name == "station1(Clone)")
+					{
+						teleOffset = new Vector3(550f,0f,0f);
 					}
 					//Debug.Log (deets.planets.Length);//.transform.position + new Vector3(100000f,0f,0f));
 				telePosition = -deets.orbitals[planetJumpNum].transform.position + teleOffset;
@@ -210,34 +215,38 @@ public class movement : MonoBehaviour {
 		forceFromStar = ((G*starMass)/Mathf.Pow(distanceToPlayer,2f)) * directionToPlayer.normalized; 
 		newVector *= Time.deltaTime;
 	
-		if(shipControl.docking == false)
+		if(shipCont.docking == false)
 		{
 			forceFromPlanets =  Vector3.zero; // undo if unsuccessful;
 		totalAccel += newVector*Time.deltaTime + forceFromPlanets * Time.deltaTime;
 		}
-		if(shipControl.docking == true)// && shipControl.docked == false)
+		if(shipCont.docking == true)// && shipControl.docked == false)
 		{
 			//Debug.Log ("CAlling");
 			//shipControl.inControl = false;
-			shipControl.disableControl();
+		//	shipControl.disableControl();
 			totalAccel = Vector3.zero;
-			if(shipControl.getDistanceToDock().magnitude < 3f)
+			if(shipCont.getDistanceToDock().magnitude < 3f && shipCont.linedUp == true)
 			{
-				totalAccel += shipControl.getDistanceToDock();
-				shipControl.docked = true;
+				totalAccel += shipCont.getDistanceToDock();
+				Debug.Log ("close enough, marking docked");
+				shipCont.docked = true;
+				playerBody.GetComponent<PlayerControl>().docked = true;
+				shipCont.docking = false;
 				//Debug.Log ("Really close" + totalAccel);
 				//Debug.Log ("tight dock");
 			}
 			else
 			{
-				totalAccel += shipControl.getDistanceToDock() * (1/(1+((shipControl.getDistanceToDock().magnitude*(Time.deltaTime*50)))));
+//				Debug.Log (shipCont.getDistanceToDock());
+				totalAccel += shipCont.getDistanceToDock() * (1/(1+((shipCont.getDistanceToDock().magnitude*(Time.deltaTime*50)))));
 				//Debug.Log (shipControl.getDistanceToDock());
 				//Debug.Log ("adding " + totalAccel);
 			}
 		}
 
-		if(shipControl.docked == true)
-		{
+		if(shipCont.docked == true)
+		{totalAccel = Vector3.zero;
 			//shipControl.inControl = false;
 		//	totalAccel += -shipControl.distanceToDock;
 		}

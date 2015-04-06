@@ -64,7 +64,7 @@ public class StationMovement : MonoBehaviour {
 
 		if(parent != null)
 		{
-			if(!player.GetComponent<ShipController>().docked || !player.GetComponent<ShipController>().linedUp)
+			if(!player.GetComponent<ShipControl>().docked || !player.GetComponent<ShipControl>().linedUp)
 			{
 		tempMovTime += (double)Time.deltaTime;
 		

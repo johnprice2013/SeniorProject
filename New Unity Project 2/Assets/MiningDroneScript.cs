@@ -8,6 +8,7 @@ public class MiningDroneScript : MonoBehaviour {
 	public GameObject parent;
 	public float distanceToAsteroid = 0f;
 	public bool movingToShip = false;
+	public bool mining = false;
 	// Use this for initialization
 	void Start () {
 		parent = GameObject.Find ("ShipInterior");
@@ -26,11 +27,11 @@ public class MiningDroneScript : MonoBehaviour {
 			this.transform.LookAt(targetedObject.transform.position);
 			if(distanceToAsteroid <= 50)
 			{
-				Debug.Log ("mining");
+				if(!mining)
+				{
+				StartCoroutine(mine());
+				}
 			}
-
-
-
 		}
 		else if(parent.transform.name != "ShipInterior")
 		{
@@ -48,7 +49,17 @@ public class MiningDroneScript : MonoBehaviour {
 			this.transform.position = (parent.transform.position+new Vector3(0f,-1.5f,14f));
 		}
 
+	}
 
+	public IEnumerator mine()
+	{
+		mining = true;
+		Debug.Log ("mining ore");
+		yield return new WaitForSeconds(10f);
+		int fetchInt = Random.Range(0,1000);
+		GameObject.FindGameObjectWithTag("Player").transform.FindChild("ShipInventory").GetComponent<ShipInventoryScript>().addSingleItem(targetedObject.GetComponent<AsteroidInfo>().astOre);
+//		addSingleItem (itemList.GetComponent<ItemListInitializer>().fetchItem(fetchInt));
+		mining = false;
 	}
 
 	public IEnumerator moveToShipTimer()

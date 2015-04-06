@@ -12,8 +12,7 @@ public class Initialize : MonoBehaviour {
 	public int sectorZ = 5000;
 	public GameObject secCenter;
 	public SectorGenerator secGen;
-	public bool piloting = false;
-	public bool fighting = false;
+
 	public GameObject[] missions;
 	public int currency = 0;
 

@@ -1,11 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ContainerLootableCheck.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\MainMenuScript.cs">
     <Files>
-      <File FileName="Assets\PlayerInventory.cs" Line="18" Column="2" />
-      <File FileName="Assets\ContainerGUIBehavior.cs" Line="36" Column="59" />
-      <File FileName="Assets\ContainerLootableCheck.cs" Line="69" Column="21" />
-      <File FileName="Assets\PromptCanvasScript.cs" Line="3" Column="22" />
+      <File FileName="Assets\StartingSceneScript.cs" Line="12" Column="1" />
+      <File FileName="Assets\PlanetInfo.cs" Line="1" Column="1" />
+      <File FileName="Assets\TempPlanetInit.cs" Line="1" Column="1" />
+      <File FileName="Assets\MainMenuScript.cs" Line="18" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

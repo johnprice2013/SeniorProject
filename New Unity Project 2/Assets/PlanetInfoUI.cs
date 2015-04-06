@@ -30,28 +30,28 @@ public class PlanetInfoUI : MonoBehaviour {
 		if(numberOfUpdates == 5)
 		{
 			int tempNum = 0;
-			foreach(var planet in GameObject.FindGameObjectsWithTag("planet"))
-			{
-				GameObject currentButton = (GameObject)Instantiate(planetButton);
-				currentButton.transform.parent = this.gameObject.transform;
-				currentButton.transform.localScale =  new Vector3(1,1,1);
-				currentButton.transform.localPosition = new Vector3(100,localButtonHeight*30,0);
-				localButtonHeight--;
-				currentButton.transform.localEulerAngles = Vector3.zero;
-				currentButton.GetComponent<PlanetButtonInfo>().planet = planet;
-				numberOfBodies++;
-			}
-			foreach(var planet in GameObject.FindGameObjectsWithTag("Asteroid"))
-			{
-				GameObject currentButton = (GameObject)Instantiate(planetButton);
-				currentButton.transform.parent = this.gameObject.transform;
-				currentButton.transform.localScale =  new Vector3(1,1,1);
-				currentButton.transform.localPosition = new Vector3(100,localButtonHeight*30,0);
-				localButtonHeight--;
-				currentButton.transform.localEulerAngles = Vector3.zero;
-				currentButton.GetComponent<PlanetButtonInfo>().planet = planet;
-				numberOfBodies++;
-			}
+//			foreach(var planet in GameObject.FindGameObjectsWithTag("planet"))
+//			{
+//				GameObject currentButton = (GameObject)Instantiate(planetButton);
+//				currentButton.transform.parent = this.gameObject.transform;
+//				currentButton.transform.localScale =  new Vector3(1,1,1);
+//				currentButton.transform.localPosition = new Vector3(100,localButtonHeight*30,0);
+//				localButtonHeight--;
+//				currentButton.transform.localEulerAngles = Vector3.zero;
+//				currentButton.GetComponent<PlanetButtonInfo>().planet = planet;
+//				numberOfBodies++;
+//			}
+//			foreach(var planet in GameObject.FindGameObjectsWithTag("Asteroid"))
+//			{
+//				GameObject currentButton = (GameObject)Instantiate(planetButton);
+//				currentButton.transform.parent = this.gameObject.transform;
+//				currentButton.transform.localScale =  new Vector3(1,1,1);
+//				currentButton.transform.localPosition = new Vector3(100,localButtonHeight*30,0);
+//				localButtonHeight--;
+//				currentButton.transform.localEulerAngles = Vector3.zero;
+//				currentButton.GetComponent<PlanetButtonInfo>().planet = planet;
+//				numberOfBodies++;
+//			}
 			foreach(var planet in GameObject.FindGameObjectsWithTag("station"))
 			{
 				GameObject currentButton = (GameObject)Instantiate(planetButton);
@@ -64,16 +64,16 @@ public class PlanetInfoUI : MonoBehaviour {
 				numberOfBodies++;
 			}
 			orbitals = new GameObject[numberOfBodies];
-			foreach(var planet in GameObject.FindGameObjectsWithTag("planet"))
-			{
-				orbitals[tempNum] = planet;
-				tempNum++;
-			}
-			foreach(var planet in GameObject.FindGameObjectsWithTag("Asteroid"))
-			{
-				orbitals[tempNum] = planet;
-				tempNum++;
-			}
+//			foreach(var planet in GameObject.FindGameObjectsWithTag("planet"))
+//			{
+//				orbitals[tempNum] = planet;
+//				tempNum++;
+//			}
+//			foreach(var planet in GameObject.FindGameObjectsWithTag("Asteroid"))
+//			{
+//				orbitals[tempNum] = planet;
+//				tempNum++;
+//			}
 			foreach(var planet in GameObject.FindGameObjectsWithTag("station"))
 			{
 				orbitals[tempNum] = planet;

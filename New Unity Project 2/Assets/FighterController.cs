@@ -79,7 +79,8 @@ public class FighterController : MonoBehaviour {
 		{
 			camera.enabled = false;
 		}
-		player.GetComponent<PlayerMovementInShip>().freeInShip = true;
+		player.GetComponent<PlayerControl>().state = player.gameObject.AddComponent<PlayerStateFree>();
+		Destroy (player.GetComponent<PlayerStatePilotingFighter>());
 		player.GetComponent<MeshRenderer>().renderer.enabled = true;
 		player.GetComponent<MouseLook>().enabled = true;
 		camerasEnabled = false;

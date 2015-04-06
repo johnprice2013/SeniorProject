@@ -28,6 +28,7 @@ public class PlayerMovementInShip : MonoBehaviour {
 		pilotSeat = GameObject.Find ("pilotSeat");
 		cameras = GetComponentsInChildren<Camera>();
 		fighter = GameObject.Find ("Fighter");
+		this.transform.parent = playerShip.transform;
 
 		//inShipPosition = playerShip.transform;
 		//transform.position = inShipPosition + new Vector3(0,3,0);
@@ -43,81 +44,88 @@ public class PlayerMovementInShip : MonoBehaviour {
 	void FixedUpdate () {
 		if(freeInShip == true)
 		{
-			if(cameraEnabled == false)
-			{
-				cameraEnabled = true;
-				foreach(var camera in cameras)
-				{
-					camera.enabled = true;
-				}
-			}
-			if(childOfShip == false)
-			{
-				transform.parent = playerShip.transform;
-				childOfShip = true;
-			}
-			localMovement = Vector3.zero;
-			localGravity = -playerShip.transform.up;
-			rigidbody.velocity = Vector3.zero;
-			if(!IsGrounded())
-			{
-				verticalSpeed += -playerShip.transform.up/3 * Time.deltaTime;
-			}
-			else
-			{
-				verticalSpeed = Vector3.zero;
-			}
-
-			if(Input.GetKey(KeyCode.W))
-			{
-				localMovement += transform.forward * playerSpeed * Time.deltaTime;
-			}
-			if(Input.GetKey(KeyCode.A))
-			{
-				localMovement += -transform.right * playerSpeed * Time.deltaTime;
-			}
-			if(Input.GetKey(KeyCode.D))
-			{
-				localMovement += transform.right * playerSpeed * Time.deltaTime;
-
-			}
-			if(Input.GetKey(KeyCode.S))
-			{
-				localMovement  += -transform.forward * playerSpeed * Time.deltaTime;
-			}
-			if(Input.GetKey(KeyCode.Space) && IsGrounded())
-			{
-				verticalSpeed += transform.up/8;
-			}
-
-			transform.Translate(localMovement + verticalSpeed,Space.World);
-		
-			distanceToSeat = (transform.position - pilotSeat.transform.position).magnitude;
-			if(Input.GetKey (KeyCode.E) && (distanceToSeat < 2f))
-			{
-				playerInit.piloting = true;
-				freeInShip = false;
-				foreach(var camera in cameras)
-				{
-					camera.enabled = false;
-				}
-				cameraEnabled = false;
-				playerShip.GetComponent<ShipController>().inControl = true;
-			}
-			distanceToFighter = (transform.position - fighter.transform.position).magnitude;
-			if(Input.GetKey (KeyCode.E) && distanceToFighter < 3f)
-			{
-				GetComponent<MeshRenderer>().renderer.enabled = false;
-				GetComponent<MouseLook>().enabled = false;
-				playerInit.fighting = true;
-				foreach(var camera in cameras)
-				{
-					camera.enabled = false;
-				}
-				cameraEnabled = false;
-				freeInShip = false;
-				fighter.GetComponent<FighterController>().inControl = true;
-			}
+//			if(cameraEnabled == false)
+//			{
+//				cameraEnabled = true;
+//				foreach(var camera in cameras)
+//				{
+//					camera.enabled = true;
+//				}
+//			}
+//			if(childOfShip == false)
+//			{
+//				transform.parent = playerShip.transform;
+//				childOfShip = true;
+//			}
+//			localMovement = Vector3.zero;
+//			localGravity = -playerShip.transform.up;
+//			rigidbody.velocity = Vector3.zero;
+//			if(!IsGrounded())
+//			{
+//				verticalSpeed += -playerShip.transform.up/3 * Time.deltaTime;
+//			}
+//			else
+//			{
+//				verticalSpeed = Vector3.zero;
+//			}
+//			if(Input.GetKey(KeyCode.LeftShift))
+//			{
+//				playerSpeed = 6f;
+//			}
+//			else
+//			{
+//				playerSpeed = 3f;
+//			}
+//			if(Input.GetKey(KeyCode.W))
+//			{
+//				localMovement += transform.forward * playerSpeed * Time.deltaTime;
+//			}
+//			if(Input.GetKey(KeyCode.A))
+//			{
+//				localMovement += -transform.right * playerSpeed * Time.deltaTime;
+//			}
+//			if(Input.GetKey(KeyCode.D))
+//			{
+//				localMovement += transform.right * playerSpeed * Time.deltaTime;
+//
+//			}
+//			if(Input.GetKey(KeyCode.S))
+//			{
+//				localMovement  += -transform.forward * playerSpeed * Time.deltaTime;
+//			}
+//			if(Input.GetKey(KeyCode.Space) && IsGrounded())
+//			{
+//				verticalSpeed += transform.up/8;
+//			}
+//
+//			transform.Translate(localMovement + verticalSpeed,Space.World);
+//		
+//			distanceToSeat = (transform.position - pilotSeat.transform.position).magnitude;
+//			if(Input.GetKey (KeyCode.E) && (distanceToSeat < 2f))
+//			{
+//				playerInit.piloting = true;
+//				freeInShip = false;
+//				foreach(var camera in cameras)
+//				{
+//					camera.enabled = false;
+//				}
+//				cameraEnabled = false;
+//				playerShip.GetComponent<ShipController>().inControl = true;
+//			}
+//			distanceToFighter = (transform.position - fighter.transform.position).magnitude;
+//			if(Input.GetKey (KeyCode.E) && distanceToFighter < 3f)
+//			{
+//				GetComponent<MeshRenderer>().renderer.enabled = false;
+//				GetComponent<MouseLook>().enabled = false;
+//				playerInit.fighting = true;
+//				foreach(var camera in cameras)
+//				{
+//					camera.enabled = false;
+//				}
+//				cameraEnabled = false;
+//				freeInShip = false;
+//				fighter.GetComponent<FighterController>().inControl = true;
+//			}
 
 		}
 		else

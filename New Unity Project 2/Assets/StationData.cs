@@ -14,10 +14,12 @@ public class StationData : MonoBehaviour {
 	public bool notAbandoned = true;
 	// Use this for initialization
 	void Start () {
+		Debug.Log (notAbandoned);
 		if(notAbandoned)
 		{
 		for(int x = 0; x < 4; x++)
 		{
+				Debug.Log ("Should be generating missions");
 			GameObject newObject = (GameObject) Instantiate (mission);
 			newObject.GetComponent<MissionInfo>().missionStation = (GameObject)this.gameObject;
 			newObject.GetComponent<MissionInfo>().missionNumber = x;

@@ -20,7 +20,7 @@ public class OrbitalGenerator : MonoBehaviour {
 		stationSeed = seed;
 		Random.seed = seed;
 		stationChoice = Random.Range (0,5);
-		if(stationChoice == 0)
+		if(stationChoice < 3)
 		{
 			planetStation = (GameObject)Instantiate (abandonedStation, new Vector3(20000+GetComponent<PlanetMovement>().planetRadius,0,0) + transform.position, Quaternion.identity);
 			planetStation.GetComponent<StationData>().stationSeed = stationSeed;
@@ -29,7 +29,7 @@ public class OrbitalGenerator : MonoBehaviour {
 			planetStation.GetComponent<StationMovement>().parent = (GameObject)this.gameObject;
 			GetComponent<PlanetInfo>().hasAbandonedStation = true;
 		}
-		else if(stationChoice < 4)
+		else
 		{
 			planetStation = (GameObject)Instantiate (station, new Vector3(20000+GetComponent<PlanetMovement>().planetRadius,0,0) + transform.position, Quaternion.identity);
 			planetStation.GetComponent<StationData>().stationSeed = stationSeed;

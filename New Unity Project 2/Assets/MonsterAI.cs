@@ -13,6 +13,7 @@ public class MonsterAI : MonoBehaviour {
 	public float runSpeed = 3f;
 	public float walkSpeed = 1f;
 	public MonsterState state;
+	public int passCount = 0;
 	// Use this for initialization
 	void Start () {
 		anim = this.GetComponent<Animator>();
@@ -30,9 +31,16 @@ public class MonsterAI : MonoBehaviour {
 
 	public void FixedUpdate()
 	{
+		//if(passCount < 5)
+		//{
+//			passCount++;//
+//		}//
+		//else
+		//{
 		state.movement();
 		//state.setAnimBool();
 		state.checkNextState ();
+	//	}
 	}
 
 
