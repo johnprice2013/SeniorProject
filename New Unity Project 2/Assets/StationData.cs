@@ -14,18 +14,17 @@ public class StationData : MonoBehaviour {
 	public bool notAbandoned = true;
 	// Use this for initialization
 	void Start () {
-		Debug.Log (notAbandoned);
+//		Debug.Log (notAbandoned);
 		if(notAbandoned)
 		{
 		for(int x = 0; x < 4; x++)
 		{
-				Debug.Log ("Should be generating missions");
+//			Debug.Log ("Should be generating missions");
 			GameObject newObject = (GameObject) Instantiate (mission);
 			newObject.GetComponent<MissionInfo>().missionStation = (GameObject)this.gameObject;
+			newObject.GetComponent<MissionDetails>().missionNumber = x;
 			newObject.GetComponent<MissionInfo>().missionNumber = x;
 			newObject.transform.parent = this.gameObject.transform;
-
-
 		}
 		}
 	}
@@ -33,12 +32,8 @@ public class StationData : MonoBehaviour {
 	public void createEnemyStrike()
 	{		
 			
-			enemyAreaInstance = (GameObject)Instantiate(enemyArea);
-			enemyAreaInstance.transform.parent = this.gameObject.transform;
-			
-
-
-
+		enemyAreaInstance = (GameObject)Instantiate(enemyArea);
+		enemyAreaInstance.transform.parent = this.gameObject.transform;
 
 	}
 	

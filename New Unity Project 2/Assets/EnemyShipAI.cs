@@ -72,6 +72,17 @@ public class EnemyShipAI : MonoBehaviour {
 
 			if(enemyHealth <= 0)
 			{
+				GameObject player = GameObject.Find ("Capsule");
+				foreach(Transform thing in player.transform)
+				{
+					if(thing.name == "Mission(Clone)")
+					{
+						if(thing.GetComponent<MissionDetails>().mission.missionType == "Kill")
+						{
+							thing.GetComponent<KillMission>().addKill();
+						}
+					}
+				}
 				Destroy(this.gameObject);
 			}
 		}

@@ -48,6 +48,7 @@ public class movement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		GameObject.Find ("EngineSound").GetComponent<EngineAudioControl>().shipMov = this;
 		speed = 500f;
 		G = .1f;
 		player = GameObject.FindGameObjectWithTag("Player");
@@ -62,9 +63,13 @@ public class movement : MonoBehaviour {
 		light.transform.LookAt(player.transform); 
 
 
-		if(secSwitch.firstStart)
+		if(secSwitch.firstStart && GameObject.Find ("SaveData") != null)
 		{
-			transform.position = new Vector3(50000f, 0f, 0f);
+			float x = (float) GameObject.Find ("SaveData").GetComponent<SaveDataStorage>().starX;
+			float y = (float)GameObject.Find ("SaveData").GetComponent<SaveDataStorage>().starY;
+			float z = (float)GameObject.Find ("SaveData").GetComponent<SaveDataStorage>().starZ;
+
+			transform.position = new Vector3(x,y,z);
 			secSwitch.firstStart = false;
 		}
 		else{

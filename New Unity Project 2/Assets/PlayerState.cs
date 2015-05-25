@@ -19,13 +19,14 @@ public abstract class PlayerState : MonoBehaviour
 	public bool camerasLocked;
 	public bool seated = false;
 	public bool rotationLocked = false;
+	public bool menuLocked = false;
 
 	public void Start()
 	{
 		ship = GameObject.FindGameObjectWithTag("Player");
 		seat = GameObject.Find("pilotSeat");
 		fighter = GameObject.FindGameObjectWithTag("Fighter");
-		Debug.Log ("Player State Initializing");
+//		Debug.Log ("Player State Initializing");
 		cameras = GetComponentsInChildren<Camera>();
 		this.transform.parent = ship.transform;
 		localGravity = -ship.transform.up;
@@ -35,11 +36,19 @@ public abstract class PlayerState : MonoBehaviour
 		camerasLocked = false;
 		unlockCameras();
 		unlockRotation();
+		StartCoroutine(timedMenuLock());
 
 	}
 	public PlayerState()
 	{
 
+	}
+
+	public IEnumerator timedMenuLock()
+	{
+		menuLocked = true;
+		yield return new WaitForSeconds(.5f);
+		menuLocked = false;
 	}
 
 	public float getFighterDistance()
@@ -136,8 +145,6 @@ public abstract class PlayerState : MonoBehaviour
 
 
 
-
-
 public class PlayerStateFree : PlayerState
 {
 
@@ -197,6 +204,16 @@ public class PlayerStateFree : PlayerState
 			verticalSpeed += transform.up/8;
 		}
 
+		if(IsGrounded() && localMovement != Vector3.zero)
+		{
+			transform.FindChild("FootstepAudio").GetComponent<AudioSource>().enabled = true;
+			transform.FindChild("FootstepAudio").GetComponent<AudioSource>().audio.pitch = (localMovement.magnitude)*10;
+		}
+		else
+		{
+			transform.FindChild("FootstepAudio").GetComponent<AudioSource>().enabled = false;
+
+		}
 		transform.Translate(localMovement + verticalSpeed,Space.World);
 
 		distanceToFighter = getFighterDistance();
@@ -215,7 +232,7 @@ public class PlayerStateFree : PlayerState
 
 		if(Input.GetKey (KeyCode.E) && distanceToFighter < 3f)
 		{
-			Debug.Log ("player switching to piloting fighter state");
+//			Debug.Log ("player switching to piloting fighter state");
 			GetComponent<MeshRenderer>().renderer.enabled = false;
 			GetComponent<MouseLook>().enabled = false;
 			playerInit.fighting = true;
@@ -230,7 +247,7 @@ public class PlayerStateFree : PlayerState
 
 		if(Input.GetKey (KeyCode.E) && (distanceToSeat < 2f))
 		{
-			Debug.Log ("player switching to piloting ship state");
+//			Debug.Log ("player switching to piloting ship state");
 			playerInit.piloting = true;
 			//freeInShip = false;
 			disableCameras ();
@@ -240,6 +257,24 @@ public class PlayerStateFree : PlayerState
 			lockCameras();
 			Destroy(this);
 		}
+
+		RaycastHit myHit;
+		if(Input.GetKey(KeyCode.E)  && menuLocked == false)
+		{
+			if(Physics.Raycast (transform.position,transform.forward, out myHit,1.5f))
+			{
+//				Debug.Log (myHit.transform.name);
+				if(myHit.collider.gameObject.tag == "3dMenu")// = )//!myHit.collider.isTrigger)
+				{
+					StartCoroutine(timedMenuLock());
+//					Debug.Log ("switching to in menu state");
+					this.GetComponent<PlayerControl>().state = gameObject.AddComponent<PlayerStateInMenu>();
+					Destroy(this);
+				}
+			}
+		}
+
+
 	}
 }
 
@@ -272,14 +307,14 @@ public class PlayerStatePilotingShip: PlayerState
 	{
 		if(playerInit.piloting == false)
 		{
-			Debug.Log ("player switching to free state");
+//			Debug.Log ("player switching to free state");
 			this.GetComponent<PlayerControl>().state = gameObject.AddComponent<PlayerStateFree>();
 			Destroy (this);
 		}
 
 		if(playerInit.docked == true && Input.GetKey(KeyCode.R))
 		{
-			Debug.Log ("player switching to free state");
+//			Debug.Log ("player switching to free state");
 			this.GetComponent<PlayerControl>().state  = gameObject.AddComponent<PlayerStateFree>();
 			playerInit.piloting = false;
 			Destroy (this);
@@ -293,12 +328,12 @@ public class PlayerStatePilotingFighter: PlayerState
 	
 	public override void movement()
 	{
-		
+
 	}
 	
 	public override void checkNextState()
 	{
-		
+
 	}
 }
 
@@ -307,11 +342,25 @@ public class PlayerStateInMenu : PlayerState
 	public override void movement()
 	{
 
+		if(camerasLocked == false)
+		{
+			lockCameras();
+		}
+		if(rotationLocked == false)
+		{
+			lockRotation();
+		}
 	}
 
 	public override void checkNextState()
 	{
+		if(Input.GetKey(KeyCode.E) && menuLocked == false)
+		{
 
+//			Debug.Log ("switching to free state");
+			this.GetComponent<PlayerControl>().state = gameObject.AddComponent<PlayerStateFree>();
+			Destroy(this);
+		}
 	}
 }
 

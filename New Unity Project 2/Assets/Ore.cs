@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
-public class Ore : MonoBehaviour {
+[XmlRoot("OreClass")]
+public class Ore{// : MonoBehaviour {
 
 
 	public Color oreColor;
@@ -27,10 +31,33 @@ public class Ore : MonoBehaviour {
 		baseValue = val;
 		oreName = passedName;
 		count = 1;
+	
 	}
 
+	public Ore getSingleOre(Ore passedOre)
+	{	
+		Ore oreToReturn = new Ore();//this.gameObject.AddComponent<Ore>();
+		oreToReturn.rarity = passedOre.rarity;
+		oreToReturn.baseValue = passedOre.baseValue;
+		oreToReturn.oreName = passedOre.oreName;
+		oreToReturn.count = 1;
+		return oreToReturn;
 
+	}
+	public Ore getOre(Ore passedOre)
+	{
+		Ore oreToReturn = new Ore();//this.gameObject.AddComponent<Ore>();
+		oreToReturn.rarity = passedOre.rarity;
+		oreToReturn.baseValue = passedOre.baseValue;
+		oreToReturn.oreName = passedOre.oreName;
+		oreToReturn.count = passedOre.count;
+		return oreToReturn;
+	}
 
+	public void setCount(int passedCount)
+	{
+		count = passedCount;
+	}
 	//void Start () {
 	
 	//}

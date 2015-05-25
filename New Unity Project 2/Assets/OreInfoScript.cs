@@ -11,6 +11,7 @@ public class OreInfoScript : MonoBehaviour {
 	public int totalRarity = 0;
 	// Use this for initialization
 	void Start () {
+		DontDestroyOnLoad(this);
 		//Debug.Log ("Reading ore details from file");
 		if(File.Exists ("OreInfo.txt"))
 		{
@@ -36,7 +37,7 @@ public class OreInfoScript : MonoBehaviour {
 
 			oreParts = oreArray[x+1].Split (',');
 		//	Debug.Log (oreParts[0] + " " + oreParts[1] + " " + oreParts[2]);
-			ores[x] = this.gameObject.AddComponent<Ore>();
+			ores[x] = new Ore();//this.gameObject.AddComponent<Ore>();
 			ores[x].oreName = oreParts[0].Trim();
 			ores[x].baseValue = System.Convert.ToInt32(oreParts[1]);
 			ores[x].rarity = System.Convert.ToInt32 (oreParts[2]);
@@ -72,6 +73,21 @@ public class OreInfoScript : MonoBehaviour {
 		return oreToReturn;
 	}
 
+
+	public Ore fetchExplicit(string name)
+	{
+		Ore oreToReturn = new Ore();//this.gameObject.AddComponent<Ore>();//null;
+		for (int x = 0; x < ores.Length; x++)
+		{
+			if(name == ores[x].oreName)
+			{
+
+				oreToReturn = oreToReturn.getOre(ores[x]);
+				Debug.Log (oreToReturn.count + " in explicit call");
+			}
+		}
+		return oreToReturn;
+	}
 
 	void Update () {
 	

@@ -58,7 +58,8 @@ public class MiningDroneScript : MonoBehaviour {
 		yield return new WaitForSeconds(10f);
 		int fetchInt = Random.Range(0,1000);
 		GameObject.FindGameObjectWithTag("Player").transform.FindChild("ShipInventory").GetComponent<ShipInventoryScript>().addSingleItem(targetedObject.GetComponent<AsteroidInfo>().astOre);
-//		addSingleItem (itemList.GetComponent<ItemListInitializer>().fetchItem(fetchInt));
+
+		//		addSingleItem (itemList.GetComponent<ItemListInitializer>().fetchItem(fetchInt));
 		mining = false;
 	}
 

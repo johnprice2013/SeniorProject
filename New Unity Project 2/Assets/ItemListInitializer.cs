@@ -18,18 +18,18 @@ public class ItemListInitializer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		DontDestroyOnLoad(this);
 		//for debug purposes
 
 	//	myInventory = GameObject.Find("Inventory").GetComponent<InventoryScript>();
 
 		//Debug.Log ("Reading ore details from file");
-		Debug.Log ("running");
+//		Debug.Log ("running");
 		if(File.Exists ("ItemInfo.txt"))
 		{
 			var itemFile = File.OpenText ("ItemInfo.txt");
 			string fileText = itemFile.ReadToEnd();
-			Debug.Log ("file exists");
+//			Debug.Log ("file exists");
 			//Debug.Log (fileText);
 			itemFile.Close ();
 			//Debug.Log ("Done reading from file");
@@ -83,6 +83,21 @@ public class ItemListInitializer : MonoBehaviour {
 		}
 		//Debug.Log (passedValue + " " + lastRarity + " " + oreToReturn.oreName);
 		
+		return itemToReturn;
+	}
+
+	public Item fetchExplicit(string name)
+	{
+	//	Debug.Log ("fetching " + name);
+		Item itemToReturn = new Item();
+		for(int x = 0; x < itemsList.Length; x++)
+		{
+			if(name == itemsList[x].name)
+			{
+				itemToReturn = itemsList[x];
+			}
+		}
+	//	Debug.Log (itemToReturn.name);
 		return itemToReturn;
 	}
 	

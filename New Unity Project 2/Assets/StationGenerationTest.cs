@@ -248,12 +248,12 @@ public class StationGenerationTest : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-		if(doneUpdating && Input.GetKey (KeyCode.U))
-		{
-			doneUpdating = false;
-			refreshFloor ();
-			StartCoroutine(updateAndWait());
-		}
+		//if(doneUpdating && Input.GetKey (KeyCode.U))
+		//{
+		//	doneUpdating = false;
+		//	refreshFloor ();
+		//	StartCoroutine(updateAndWait());
+	//	}
 	}
 
 

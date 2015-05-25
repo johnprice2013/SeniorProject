@@ -65,6 +65,9 @@ public class ContainerLootableCheck : MonoBehaviour {
 					player.GetComponent<PlayerState>().lockRotation();
 						StartCoroutine(menuWait());
 						realGUI.SetActive(true);
+					transform.FindChild("OpenContainerAudio").GetComponent<AudioSource>().Play();
+
+
 						StartCoroutine(realGUI.GetComponent<ContainerGUIBehavior>().waitAndUpdate());
 						//realGUI.GetComponent<ContainerGUIBehavior>().UpdateContainerButtons();
 					//realGUI.GetComponent<ContainerGUIBehavior>().UpdateContainerButtons();
@@ -75,10 +78,14 @@ public class ContainerLootableCheck : MonoBehaviour {
 					player.GetComponent<PlayerState>().unlockCameras();
 					player.GetComponent<PlayerState>().unlockRotation();
 						StartCoroutine(menuWait());
+					transform.FindChild("CloseContainerAudio").GetComponent<AudioSource>().Play();
+
 							realGUI.GetComponent<ContainerGUIBehavior>().shutDownButtons();
 					//StartCoroutine(realGUI.GetComponent<ContainerGUIBehavior>().deletePlayerButtons());
 					//realGUI.SetActive(false);
 						inMenu = false;
+
+
 					}
 						if(Input.GetKey(KeyCode.E) && inMenu == true)
 					{

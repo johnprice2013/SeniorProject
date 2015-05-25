@@ -28,6 +28,7 @@ public abstract class InventoryScript : MonoBehaviour {
 	
 	public void addSingleItem(Item singleItem)
 	{
+//		Debug.Log ("adding " + singleItem.name);
 		//	Debug.Log ("adding " + singleItem.name);
 		int itemIndex = this.findItem(singleItem);
 		if(itemIndex != -1)

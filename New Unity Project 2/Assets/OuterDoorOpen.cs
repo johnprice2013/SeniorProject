@@ -16,9 +16,14 @@ public class OuterDoorOpen : MonoBehaviour {
 	public Vector3 startPosition;
 	public Vector3 endPosition;
 	public bool docked = false;
+	public GameObject doorAudio;
+	public GameObject realDoor;
 	
 	// Use this for initialization
 	void Start () {
+		realDoor = (GameObject) Instantiate(doorAudio);
+		realDoor.transform.parent = this.transform;
+		realDoor.transform.localPosition = Vector3.zero;
 		player = GameObject.FindGameObjectWithTag("PlayerBody");
 		ship = GameObject.FindGameObjectWithTag("Player");
 		shipCon = ship.GetComponent<ShipControl>();
@@ -64,6 +69,8 @@ public class OuterDoorOpen : MonoBehaviour {
 	{
 		raising = true;
 		moving = true;
+		realDoor.GetComponent<AudioSource>().Play();
+
 		yield return new WaitForSeconds(2f);
 		raising = false;
 		moving = false;
@@ -75,6 +82,8 @@ public class OuterDoorOpen : MonoBehaviour {
 	{
 		lowering = true;
 		moving = true;
+		realDoor.GetComponent<AudioSource>().Play();
+
 		yield return new WaitForSeconds(2f);
 		lowering = false;
 		moving = false;

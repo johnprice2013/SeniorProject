@@ -27,6 +27,7 @@ public class ContainerGUIBehavior : MonoBehaviour {
 		playInv = player.transform.Find ("Inventory").GetComponent<PlayerInventory>();
 		contInv = transform.parent.GetComponent<ContainerInventory>();
 
+	
 		//This object will be instantiated when pressing E over a container.
 		//when instantiated, display buttons for each of the items in the container
 		//from left to right then top to bottom.
@@ -40,7 +41,9 @@ public class ContainerGUIBehavior : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+
 	}
+
 
 	public void shutDownButtons()
 	{

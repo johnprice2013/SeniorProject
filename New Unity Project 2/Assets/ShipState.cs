@@ -89,7 +89,7 @@ public abstract class ShipState : MonoBehaviour {
 
 public class ShipStateInControl : ShipState
 {
-
+	public int count = 0;
 	public override void movement()
 	{
 		if(mLookActive == false)
@@ -99,6 +99,17 @@ public class ShipStateInControl : ShipState
 		if(camerasActive == false)
 		{
 			enableCameras();
+		}
+		foreach(Camera camera in cameras)
+		{
+		if(camera.transform.localEulerAngles != new Vector3(0,0,0))
+			{
+	 			camera.transform.localEulerAngles = new Vector3(0,0,0);
+			}
+		}
+		if(count < 30)
+		{
+			count++;
 		}
 //		Debug.Log ("InControl");
 		inControl = true;
@@ -112,6 +123,16 @@ public class ShipStateInControl : ShipState
 			this.GetComponent<ShipControl>().state = gameObject.AddComponent<ShipStateDocking>();
 			disableMouseLook();
 			Destroy (this);
+		}
+
+		if(count >29 && Input.GetKey (KeyCode.LeftShift))
+		{
+			Debug.Log ("Ship switching to look state");
+			this.GetComponent<ShipControl>().state = gameObject.AddComponent<ShipStateInMenu>();
+			disableMouseLook();
+
+			Destroy(this);
+
 		}
 
 		if(Input.GetKey(KeyCode.R))
@@ -128,16 +149,35 @@ public class ShipStateInControl : ShipState
 
 public class ShipStateInMenu : ShipState
 {
+	public int count = 0;
 	public override void movement()
 	{
+		foreach(Camera camera in cameras)
+		{
+			if(camera.transform.localEulerAngles != new Vector3(0,32,0))
+			{
+				camera.transform.localEulerAngles = new Vector3(0,32,0);
+			}
+			//transition camera to point at menu
+		}
 
+		if(count < 30)
+		{
+			count++;
+		}
 
 	}
 
 
 	public override void checkNextState()
 	{
+		if(count >= 29 && Input.GetKey(KeyCode.LeftShift))
+		{
+			enableCameras ();
+			this.GetComponent<ShipControl>().state = gameObject.AddComponent<ShipStateInControl>();
+			Destroy(this);
 
+		}
 
 	}
 

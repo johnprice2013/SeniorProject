@@ -48,6 +48,7 @@ public class MissionInfo : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+
 		generateMissionDetails();
 	}
 	
@@ -68,38 +69,6 @@ public class MissionInfo : MonoBehaviour {
 		if(missionType == "Kill" && accepted == true && initiated == false)
 		{
 			//launch function to initiate strike.
-			Random.seed = missionID;
-			numToPick = Random.Range(-222,222);
-
-			xNum = (int) (numToPick/100);
-			Random.seed = xNum;
-			xNum = Random.Range (0,3);
-
-			yNum = (int) (numToPick%100)/10;
-			Random.seed = yNum;
-			yNum = Random.Range (0,3);
-
-			zNum = (int) (numToPick%100)%10;
-			Random.seed = zNum;
-			zNum = Random.Range (0,3);
-
-			xNeg = Random.Range (0,1);
-			yNeg = Random.Range (0,1);
-			zNeg = Random.Range (0,1);
-
-			if(xNeg == 1)
-			{
-				xNum *= -1;
-			}
-			if(yNeg == 1)
-			{
-				yNum *= -1;
-			}
-			if(zNeg == 1)
-			{
-				zNum *= -1;
-			}
-			Debug.Log (xNum + " " + yNum + " " + zNum);
 			findStationInSector(xNum,yNum,zNum);
 
 

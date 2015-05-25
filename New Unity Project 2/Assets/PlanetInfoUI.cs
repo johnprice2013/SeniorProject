@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlanetInfoUI : MonoBehaviour {
 	public bool fifthUpdate = false;
@@ -41,25 +42,29 @@ public class PlanetInfoUI : MonoBehaviour {
 //				currentButton.GetComponent<PlanetButtonInfo>().planet = planet;
 //				numberOfBodies++;
 //			}
-//			foreach(var planet in GameObject.FindGameObjectsWithTag("Asteroid"))
-//			{
-//				GameObject currentButton = (GameObject)Instantiate(planetButton);
-//				currentButton.transform.parent = this.gameObject.transform;
-//				currentButton.transform.localScale =  new Vector3(1,1,1);
-//				currentButton.transform.localPosition = new Vector3(100,localButtonHeight*30,0);
-//				localButtonHeight--;
-//				currentButton.transform.localEulerAngles = Vector3.zero;
-//				currentButton.GetComponent<PlanetButtonInfo>().planet = planet;
-//				numberOfBodies++;
-//			}
+
 			foreach(var planet in GameObject.FindGameObjectsWithTag("station"))
 			{
 				GameObject currentButton = (GameObject)Instantiate(planetButton);
 				currentButton.transform.parent = this.gameObject.transform;
 				currentButton.transform.localScale =  new Vector3(1,1,1);
-				currentButton.transform.localPosition = new Vector3(100,localButtonHeight*30,0);
+				currentButton.transform.localPosition = new Vector3(0,localButtonHeight*30,0);
 				localButtonHeight--;
 				currentButton.transform.localEulerAngles = Vector3.zero;
+				currentButton.transform.FindChild("Text").GetComponent<Text>().text = "station";
+				currentButton.GetComponent<PlanetButtonInfo>().planet = planet;
+				numberOfBodies++;
+			}
+			foreach(var planet in GameObject.FindGameObjectsWithTag("Asteroid"))
+			{
+				GameObject currentButton = (GameObject)Instantiate(planetButton);
+				currentButton.transform.parent = this.gameObject.transform;
+				currentButton.transform.localScale =  new Vector3(1,1,1);
+				currentButton.transform.localPosition = new Vector3(0,localButtonHeight*30,0);
+				localButtonHeight--;
+				currentButton.transform.localEulerAngles = Vector3.zero;
+				currentButton.transform.FindChild("Text").GetComponent<Text>().text = "asteroid";
+
 				currentButton.GetComponent<PlanetButtonInfo>().planet = planet;
 				numberOfBodies++;
 			}

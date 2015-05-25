@@ -73,8 +73,15 @@ public class MonsterStateChasing : MonsterState
 		{
 			//Debug.Log (hit.transform.name);
 			animator.SetBool("chasing", false);
+			this.transform.GetComponent<MonsterAI>().realRoar.GetComponent<AudioSource>().enabled = true;
 			//Debug.Log ("Chasing, couldn't see player, inv last known");
 			this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateInvestigating>();
+			this.transform.GetComponent<MonsterAI>().realThump.GetComponent<AudioSource>().enabled = true;
+			
+			this.transform.GetComponent<MonsterAI>().realRoar.GetComponent<AudioSource>().enabled = false;
+			
+			this.transform.GetComponent<MonsterAI>().realGrowl.GetComponent<AudioSource>().enabled = false;
+
 			gameObject.GetComponent<MonsterStateInvestigating>().lastKnownPos = player.transform.position;
 			Destroy(this);
 		}
@@ -83,6 +90,13 @@ public class MonsterStateChasing : MonsterState
 			animator.SetBool ("chasing",false);
 			//Debug.Log ("chasing, close to player, attacking");
 			this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateAttacking>();
+			this.transform.GetComponent<MonsterAI>().realThump.GetComponent<AudioSource>().enabled = false;
+			
+			this.transform.GetComponent<MonsterAI>().realRoar.GetComponent<AudioSource>().enabled = true;
+			
+			this.transform.GetComponent<MonsterAI>().realGrowl.GetComponent<AudioSource>().enabled = false;
+
+
 			Destroy(this);
 		}
 	}
@@ -154,6 +168,14 @@ public class MonsterStateInvestigating : MonsterState
 			animator.SetBool ("investigating",false);
 			Debug.Log ("investigating spotted player with light on");
 			this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateChasing>();
+			this.transform.GetComponent<MonsterAI>().realThump.GetComponent<AudioSource>().enabled = true;
+			
+			this.transform.GetComponent<MonsterAI>().realRoar.GetComponent<AudioSource>().enabled = true;
+			
+			this.transform.GetComponent<MonsterAI>().realGrowl.GetComponent<AudioSource>().enabled = false;
+
+
+
 			Destroy(this);
 		}
 		else if((transform.position - lastKnownPos).magnitude < 1)
@@ -161,6 +183,12 @@ public class MonsterStateInvestigating : MonsterState
 			animator.SetBool ("investigating",false);
 			Debug.Log ("investigating made it to search location");
 			this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateSearching>();
+			this.transform.GetComponent<MonsterAI>().realThump.GetComponent<AudioSource>().enabled = false;
+			
+			this.transform.GetComponent<MonsterAI>().realRoar.GetComponent<AudioSource>().enabled = false;
+			
+			this.transform.GetComponent<MonsterAI>().realGrowl.GetComponent<AudioSource>().enabled = true;
+
 			Destroy(this);
 		}
 		else if(timeSpent > 20f)
@@ -168,6 +196,12 @@ public class MonsterStateInvestigating : MonsterState
 			animator.SetBool ("investigating",false);
 			Debug.Log ("investigating timed out, searching here");
 			this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateSearching>();
+			this.transform.GetComponent<MonsterAI>().realThump.GetComponent<AudioSource>().enabled = false;
+			
+			this.transform.GetComponent<MonsterAI>().realRoar.GetComponent<AudioSource>().enabled = false;
+			
+			this.transform.GetComponent<MonsterAI>().realGrowl.GetComponent<AudioSource>().enabled = true;
+
 			Destroy(this);
 		}
 
@@ -216,6 +250,12 @@ public class MonsterStateAttacking : MonsterState
 		animator.SetBool ("attacking",false);
 			Debug.Log ("attacking, not close enough, chasing now.");
 		this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateChasing>();
+			this.transform.GetComponent<MonsterAI>().realThump.GetComponent<AudioSource>().enabled = true;
+			
+			this.transform.GetComponent<MonsterAI>().realRoar.GetComponent<AudioSource>().enabled = true;
+			
+			this.transform.GetComponent<MonsterAI>().realGrowl.GetComponent<AudioSource>().enabled = false;
+
 		Destroy(this);
 		}
 	}
@@ -362,6 +402,12 @@ public class MonsterStateWandering : MonsterState
 				animator.SetBool ("wandering",false);
 		//		Debug.Log ("wandering stopped, detected light hit");	
 				this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateInvestigating>();
+				this.transform.GetComponent<MonsterAI>().realThump.GetComponent<AudioSource>().enabled = true;
+				
+				this.transform.GetComponent<MonsterAI>().realRoar.GetComponent<AudioSource>().enabled = false;
+				
+				this.transform.GetComponent<MonsterAI>().realGrowl.GetComponent<AudioSource>().enabled = true;
+
 				this.GetComponent<MonsterStateInvestigating>().lastKnownPos = light.hitPoint;
 				Destroy(this);
 			}
@@ -415,7 +461,11 @@ public class MonsterStateSearching : MonsterState
 			animator.SetBool ("searching",false);
 		//	Debug.Log ("Searching stopped,  found player");
 			this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateChasing>();
-
+				this.transform.GetComponent<MonsterAI>().realThump.GetComponent<AudioSource>().enabled = true;
+				
+				this.transform.GetComponent<MonsterAI>().realRoar.GetComponent<AudioSource>().enabled = true;
+				
+				this.transform.GetComponent<MonsterAI>().realGrowl.GetComponent<AudioSource>().enabled = false;
 			Destroy(this);
 			
 		}
@@ -430,6 +480,12 @@ public class MonsterStateSearching : MonsterState
 		//		Debug.Log ("Searching stopped,  found light hit");
 				this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateInvestigating>();
 				this.GetComponent<MonsterStateInvestigating>().lastKnownPos = lightScript.hitPoint;
+				this.transform.GetComponent<MonsterAI>().realThump.GetComponent<AudioSource>().enabled = true;
+				
+				this.transform.GetComponent<MonsterAI>().realRoar.GetComponent<AudioSource>().enabled = false;
+				
+				this.transform.GetComponent<MonsterAI>().realGrowl.GetComponent<AudioSource>().enabled = true;
+
 				Destroy(this);
 			}
 			else if(timeSearched > 10f)
@@ -437,6 +493,12 @@ public class MonsterStateSearching : MonsterState
 				animator.SetBool ("searching",false);
 			//	Debug.Log ("searching stopped, timed out");
 				this.GetComponent<MonsterAI>().state = gameObject.AddComponent<MonsterStateWandering>();
+				this.transform.GetComponent<MonsterAI>().realThump.GetComponent<AudioSource>().enabled = true;
+
+				this.transform.GetComponent<MonsterAI>().realRoar.GetComponent<AudioSource>().enabled = false;
+
+				this.transform.GetComponent<MonsterAI>().realGrowl.GetComponent<AudioSource>().enabled = false;
+
 
 				Destroy(this);
 			}

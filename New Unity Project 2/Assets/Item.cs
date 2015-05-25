@@ -19,6 +19,11 @@ public class Item{
 
 	}
 
+	public void setCount(int passedCount)
+	{
+		count = passedCount;
+	}
+
 	public Item ItemExplicit(Item passed)
 	{
 		Item returnMe = new Item();

@@ -16,6 +16,7 @@ public class MissionMenuPlayerInteract : MonoBehaviour {
 	public GameObject acceptButton;
 	public int menuLevel = 0;
 	public GameObject closeButton;
+	public GameObject completeButton;
 	
 	// Use this for initialization
 	void Start () {
@@ -51,6 +52,7 @@ public class MissionMenuPlayerInteract : MonoBehaviour {
 		if(closeButton != null)
 		{
 			Destroy(closeButton);
+			Destroy(completeButton);
 		}
 		menuLevel = 1;
 		createCloseButton(menuLevel);
@@ -66,22 +68,30 @@ public class MissionMenuPlayerInteract : MonoBehaviour {
 			
 			if(mission.transform.name == "Mission(Clone)")
 			{	
-				if(mission.GetComponent<MissionInfo>().cancelled == false)
+				Debug.Log ("found a mission");
+				//if(mission.GetComponent<MissionInfo>().cancelled == false)
+				//{
+				if(mission.GetComponent<MissionDetails>().mission.cancelled == false)
 				{
-				
-				GameObject missionButton = (GameObject) Instantiate (showMissions);
-				missionButton.transform.parent = this.gameObject.transform;
-				missionButton.transform.localPosition = new Vector3(0,(localButtonHeight*30)-10,0);
-				localButtonHeight--;
-				missionButton.GetComponent<Image>().enabled = true;
-				missionButton.GetComponent<Button>().enabled = true;
-				missionButton.GetComponentInChildren<Text>().enabled = true;
-				missionButton.transform.localScale = new Vector3(1,1,1);
-				missionButton.transform.localEulerAngles = Vector3.zero;
-				int quickIndex = mission.GetComponent<MissionInfo>().missionNumber;
-				GameObject mission2 = mission.gameObject;
-				missionButton.GetComponentInChildren<Text>().text = mission.GetComponent<MissionInfo>().missionNumber.ToString();
-				missionButton.GetComponent<Button>().onClick.AddListener(delegate {this.showMissionDetails(mission2.gameObject);});
+					//new code
+					MissionTemplate template = mission.GetComponent<MissionDetails>().mission;
+					//
+					GameObject missionButton = (GameObject) Instantiate (showMissions);
+					missionButton.transform.parent = this.gameObject.transform;
+					missionButton.transform.localPosition = new Vector3(0,(localButtonHeight*30)-10,0);
+					localButtonHeight--;
+					missionButton.GetComponent<Image>().enabled = true;
+					missionButton.GetComponent<Button>().enabled = true;
+					missionButton.GetComponentInChildren<Text>().enabled = true;
+					missionButton.transform.localScale = new Vector3(1,1,1);
+					missionButton.transform.localEulerAngles = Vector3.zero;
+					//int quickIndex = mission.GetComponent<MissionInfo>().missionNumber;
+					int quickIndex = template.missionNumber;
+					GameObject mission2 = mission.gameObject;
+					missionButton.GetComponentInChildren<Text>().text = template.missionNumber.ToString();
+
+					//missionButton.GetComponentInChildren<Text>().text = mission.GetComponent<MissionInfo>().missionNumber.ToString();
+					missionButton.GetComponent<Button>().onClick.AddListener(delegate {this.showMissionDetails(mission2.gameObject);});
 //				
 			
 				}
@@ -96,9 +106,11 @@ public class MissionMenuPlayerInteract : MonoBehaviour {
 	
 	public void createMenuStart()
 	{
+		this.GetComponent<Canvas>().worldCamera = GameObject.Find("Capsule").transform.FindChild("Camera").camera;
 		if(closeButton != null)
 		{
 			Destroy(closeButton);
+			Destroy(completeButton);
 		}
 		menuLevel = 0;
 		createCloseButton(menuLevel);
@@ -123,7 +135,7 @@ public class MissionMenuPlayerInteract : MonoBehaviour {
 	
 	public void showMissionDetails(GameObject mission)
 	{
-
+		Debug.Log ("made it here");
 		foreach(Transform button in transform)
 		{
 			if(button.name == "MissionButton(Clone)")
@@ -132,20 +144,27 @@ public class MissionMenuPlayerInteract : MonoBehaviour {
 			Destroy(button.gameObject);
 			}
 		}
+		Debug.Log ("made it here 2");
 		if(closeButton != null)
 		{
 			Destroy(closeButton);
+			Destroy (completeButton);
 		}
+		Debug.Log ("made it here 3");
 		menuLevel = 2;
 		createCloseButton(menuLevel);
-
+		Debug.Log ("made it here 4");
+		createCompleteButton(menuLevel,mission);
+		Debug.Log ("still here");
 		this.transform.FindChild ("Image").GetComponent<Image>().enabled = true;
 	
 		this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<Text>().enabled = true;
-		this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<Text>().text = mission.GetComponent<MissionInfo>().missionText;
+		//this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<Text>().text = mission.GetComponent<MissionInfo>().missionText;
+		this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<Text>().text = mission.GetComponent<MissionDetails>().mission.getMissionText();
+
 		acceptButton = (GameObject) Instantiate (showMissions);
 		acceptButton.transform.parent = this.gameObject.transform;
-		acceptButton.transform.localPosition = new Vector3(0,-50f,0);
+		acceptButton.transform.localPosition = new Vector3(0,-30f,0);
 		acceptButton.transform.localScale =  new Vector3(1,1,1);
 
 		acceptButton.transform.localEulerAngles = Vector3.zero;
@@ -153,7 +172,7 @@ public class MissionMenuPlayerInteract : MonoBehaviour {
 		acceptButton.GetComponent<Button>().enabled = true;
 		acceptButton.GetComponentInChildren<Text>().enabled = true;
 		acceptButton.GetComponentInChildren<Text>().text = "Cancel Mission";
-
+		Debug.Log ("really still here");
 		acceptButton.GetComponent<Button>().onClick.AddListener(() => { this.deleteAcceptButton(); this.setMissionParentToPlayer(mission.gameObject);this.disableTextAndImage();this.getClosestMissions();});
 	
 	
@@ -163,19 +182,24 @@ public class MissionMenuPlayerInteract : MonoBehaviour {
 	{
 
 		int missionIndex = 0;
-
-		mission.GetComponent<MissionInfo>().cancelled = true;
+		mission.GetComponent<MissionDetails>().mission.cancelled = true;
+		//mission.GetComponent<MissionInfo>().cancelled = true;
 		Destroy (mission);
 	
 	
 	}
-	
+
 	public void deleteAcceptButton()
 	{
 	
 		Destroy (acceptButton);
 	}
-	
+
+	public void destroyMission(GameObject mission)
+	{
+		Destroy (mission);
+	}
+
 	public void createCloseButton(int level)
 	{
 		closeButton = (GameObject) Instantiate(showMissions);
@@ -195,7 +219,37 @@ public class MissionMenuPlayerInteract : MonoBehaviour {
 			closeButton.GetComponent<Button>().onClick.AddListener(() => { this.createMissionButtons(); deleteAcceptButton(); disableTextAndImage();});
 		}
 	}
-	
+
+	public void createCompleteButton(int level, GameObject mission)
+	{
+		Debug.Log ("complete button");
+		completeButton = (GameObject) Instantiate (showMissions);
+		completeButton.transform.parent = this.gameObject.transform;
+		completeButton.transform.localPosition = new Vector3(0,-60,0);
+		completeButton.transform.localScale = new Vector3(1,1,1);
+		completeButton.transform.localEulerAngles = Vector3.zero;
+		Debug.Log ("complete button2");
+		completeButton.GetComponentInChildren<Text>().text = "Complete";
+		mission.GetComponent<MissionDetails>().mission.updateProgress();
+		Debug.Log ("did I make it?");
+		if(mission.GetComponent<MissionDetails>().mission.isComplete == false)
+		{
+			completeButton.GetComponent<Button>().interactable = false;
+		}
+		else
+		{
+			completeButton.GetComponent<Button>().interactable = true;
+		}
+		Debug.Log ("complete button3");
+		completeButton.GetComponent<Button>().onClick.AddListener(() => { completeMission (mission); this.setMissionParentToPlayer(mission.gameObject); this.createMissionButtons (); deleteAcceptButton(); disableTextAndImage();});
+		Debug.Log ("complete button4");
+	}
+
+	public void completeMission(GameObject mission)
+	{
+		mission.GetComponent<MissionDetails>().mission.finishMission();
+	}
+
 	public void disableTextAndImage()
 	{
 	

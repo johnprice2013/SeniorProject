@@ -37,10 +37,10 @@ public class SectorGenerator : MonoBehaviour {
 
 		hasStar = false;
 
-		if (newSeed < 5000)
-		{
+		//if (newSeed < 5000)
+		//{
 			hasStar = true;
-		}
+		//}
 
 
 		if(hasStar)

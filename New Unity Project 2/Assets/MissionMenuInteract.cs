@@ -81,7 +81,9 @@ public class MissionMenuInteract : MonoBehaviour {
 				missionButton.transform.localEulerAngles = Vector3.zero;
 				int quickIndex = mission.GetComponent<MissionInfo>().missionNumber;
 				GameObject mission2 = mission.gameObject;
-				missionButton.GetComponentInChildren<Text>().text = mission.GetComponent<MissionInfo>().missionNumber.ToString();
+				//missionButton.GetComponentInChildren<Text>().text = mission.GetComponent<MissionInfo>().missionNumber.ToString();
+
+				missionButton.GetComponentInChildren<Text>().text = mission.GetComponent<MissionDetails>().missionNumber.ToString();
 				missionButton.GetComponent<Button>().onClick.AddListener(delegate {this.showMissionDetails(mission2.gameObject);});
 			}
 
@@ -91,6 +93,7 @@ public class MissionMenuInteract : MonoBehaviour {
 
 	public void createMenuStart()
 	{
+		this.GetComponent<Canvas>().worldCamera = GameObject.Find("Capsule").transform.FindChild("Camera").camera;
 		if(closeButton != null)
 		{
 			Destroy(closeButton);
@@ -118,7 +121,7 @@ public class MissionMenuInteract : MonoBehaviour {
 
 	public void showMissionDetails(GameObject mission)
 	{
-		Debug.Log (mission.GetComponent<MissionInfo>().missionNumber);
+		//Debug.Log (mission.GetComponent<MissionInfo>().missionNumber);
 		int index = 0;
 		foreach(Transform button in transform)
 		{
@@ -135,7 +138,8 @@ public class MissionMenuInteract : MonoBehaviour {
 		createCloseButton(menuLevel);
 		this.transform.FindChild ("Image").GetComponent<Image>().enabled = true;
 		this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<Text>().enabled = true;
-		this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<Text>().text = mission.GetComponent<MissionInfo>().missionText;
+		this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<Text>().text = mission.GetComponent<MissionDetails>().mission.getMissionText();//missionText;
+		//this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<Text>().text = mission.GetComponent<MissionInfo>().missionText;
 		acceptButton = (GameObject) Instantiate (showMissions);
 		acceptButton.transform.parent = this.gameObject.transform;
 		acceptButton.transform.localPosition = new Vector3(0,-50f,0);
