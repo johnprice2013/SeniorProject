@@ -76,7 +76,7 @@ public class DockingScript : MonoBehaviour {
 			{
 				//Thread newThread = new Thread(new ThreadStart(this.transform.parent.FindChild("StationInterior").GetComponent<StationGenerationTest>().createFloor));
 				//newThread.Start ();
-				Debug.Log ("docked, creating floor");
+//				Debug.Log ("docked, creating floor");
 				player.GetComponent<ShipControl>().docking = false;
 				dockingInProgress = false;
 				StartCoroutine (this.transform.parent.FindChild ("StationInterior").GetComponent<StationGenerationTest>().createFloor2());
@@ -89,12 +89,12 @@ public class DockingScript : MonoBehaviour {
 			if(player.GetComponent<ShipControl>().docked == true && interiorCreated ==  true && quickDistance < 20f && Input.GetKey(KeyCode.G))
 			{
 				StartCoroutine(dontPress());
-				Debug.Log ("undocking");
+	//			Debug.Log ("undocking");
 				player.GetComponent<ShipControl>().docked = false;
 			}
 			if(player.GetComponent<ShipControl>().docked == false && interiorCreated == true )
 			{
-				Debug.Log ("undocked, deleting floor");
+	//			Debug.Log ("undocked, deleting floor");
 				this.transform.parent.FindChild("StationInterior").GetComponent<StationGenerationTest>().clearFloor();
 				interiorCreated = false;
 					

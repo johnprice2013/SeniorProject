@@ -7,10 +7,13 @@ public class MissionDetails : MonoBehaviour {
 	public bool started = false;
 	// Use this for initialization
 	void Start () {
-		int index = Random.Range(0,2); /// this is for testing;
+		int index = Random.Range(0,3); /// this is for testing;
 		//index = 1;
+//		Debug.Log(started);
+
 		if(started == false)
 		{
+//			Debug.Log ("mission not started");
 		if(index == 0)
 		{
 			mission = gameObject.AddComponent<FetchOreMission>();
@@ -30,6 +33,7 @@ public class MissionDetails : MonoBehaviour {
 		}
 		}
 		started = true;
+//		Debug.Log (mission.missionNumber);
 		mission.missionNumber = missionNumber;
 		//mission = gameObject.AddComponent<FetchOreMission>();
 	}

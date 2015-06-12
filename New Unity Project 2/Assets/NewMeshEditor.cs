@@ -6,7 +6,7 @@ public class NewMeshEditor : MonoBehaviour {
 	float scale = .075f;
 	float speed = 3f;
 	bool recalculateNormals = true;
-	int seed;
+	public int seed;
 	public GameObject star;
 	private Vector3[] baseVertices;
 	public PlanetGenerator planetGen;
@@ -22,11 +22,12 @@ public class NewMeshEditor : MonoBehaviour {
 	void Start ()
 	{
 
-
+		if(Application.loadedLevelName != "StartingScene")
+		{
 		setVariables();
 
 		planMov.setSeed(seed);
-
+		}
 		createTerrain();
 
 	

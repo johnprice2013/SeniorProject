@@ -138,7 +138,8 @@ public class movement : MonoBehaviour {
 			localXAccel = 0f;
 			localYAccel = 0f;
 			localZAccel = 0f;
-			totalAccel = Vector3.zero;
+			totalAccel *= .95f;
+			//totalAccel = Vector3.zero;
 			forceFromPlanets = Vector3.zero;
 		}
 		if(Input.GetKey(KeyCode.T))
@@ -183,18 +184,18 @@ public class movement : MonoBehaviour {
 			StationMovement statMov = stations[0].GetComponent<StationMovement>();
 			totalAccel = -statMov.usedDirection *Time.deltaTime;
 		}
-		if(Input.GetKey(KeyCode.P) && hasMoved == false)
-			{
-				hasMoved = true;
-				speed *= 10f;
-				StartCoroutine(jumpWait());
-			}
-		if(Input.GetKey(KeyCode.O) && hasMoved == false)
-			{
-				hasMoved = true;
-				speed /= 10f;
-				StartCoroutine(jumpWait());
-			}
+//		if(Input.GetKey(KeyCode.P) && hasMoved == false)
+//			{
+//				hasMoved = true;
+//				speed *= 10f;
+//				StartCoroutine(jumpWait());
+//			}
+//		if(Input.GetKey(KeyCode.O) && hasMoved == false)
+//			{
+//				hasMoved = true;
+//				speed /= 10f;
+//				StartCoroutine(jumpWait());
+//			}
 		if(!Input.anyKey)
 		{
 			localXAccel = 0f;
@@ -210,12 +211,20 @@ public class movement : MonoBehaviour {
 		{
 			Debug.Log ("long wait" + dTime);
 		}
+
+
+
+
 		forwardVector = -player.transform.forward * localZAccel;
 		rightVector = -player.transform.right * localXAccel;
 		upVector = -player.transform.up * localYAccel;
+		speed = ((totalAccel.magnitude)*50f+10f);
 		Vector3 newVector = (forwardVector + rightVector + upVector) * speed;
 		directionToPlayer = player.transform.position - transform.position;
 		distanceToPlayer = directionToPlayer.magnitude;
+
+
+
 
 		forceFromStar = ((G*starMass)/Mathf.Pow(distanceToPlayer,2f)) * directionToPlayer.normalized; 
 		newVector *= Time.deltaTime;
@@ -234,7 +243,7 @@ public class movement : MonoBehaviour {
 			if(shipCont.getDistanceToDock().magnitude < 3f && shipCont.linedUp == true)
 			{
 				totalAccel += shipCont.getDistanceToDock();
-				Debug.Log ("close enough, marking docked");
+//				Debug.Log ("close enough, marking docked");
 				shipCont.docked = true;
 				playerBody.GetComponent<PlayerControl>().docked = true;
 				shipCont.docking = false;
@@ -244,7 +253,7 @@ public class movement : MonoBehaviour {
 			else
 			{
 //				Debug.Log (shipCont.getDistanceToDock());
-				totalAccel += shipCont.getDistanceToDock() * (1/(1+((shipCont.getDistanceToDock().magnitude*(Time.deltaTime*50)))));
+				totalAccel += shipCont.getDistanceToDock() * (1/(1+((shipCont.getDistanceToDock().magnitude*(Time.deltaTime*100)))));
 				//Debug.Log (shipControl.getDistanceToDock());
 				//Debug.Log ("adding " + totalAccel);
 			}

@@ -69,7 +69,7 @@ public class SellingMenu : MonoBehaviour {
 		sellButton = (GameObject) Instantiate(showMissions);
 		sellButton.transform.parent = this.gameObject.transform;
 		sellButton.transform.localPosition = new Vector3(0,0,0);
-		sellButton.transform.localScale =  new Vector3(1,1,1);
+		sellButton.transform.localScale =  new Vector3(.8f,1f,1f);
 		sellButton.transform.localEulerAngles = Vector3.zero;
 		
 		sellButton.GetComponentInChildren<Text>().text = "Sell";
@@ -88,7 +88,7 @@ public class SellingMenu : MonoBehaviour {
 		closeButton = (GameObject) Instantiate(showMissions);
 		closeButton.transform.parent = this.gameObject.transform;
 		closeButton.transform.localPosition = new Vector3(0,-100,0);
-		closeButton.transform.localScale =  new Vector3(1,1,1);
+		closeButton.transform.localScale =  new Vector3(.8f,1f,1f);
 		closeButton.transform.localEulerAngles = Vector3.zero;
 		
 		closeButton.GetComponentInChildren<Text>().text = "Close";
@@ -121,9 +121,12 @@ public class SellingMenu : MonoBehaviour {
 			for(int i = 0; i < playInv.items.Count;i++)
 			{
 				int index = i;
+				Debug.Log (myRect.rect.width);
+
 				//				Debug.Log ("creating button");
 				GameObject button = (GameObject) Instantiate(itemButton);
-				int maxCol = 3;
+				Debug.Log(button.GetComponent<RectTransform>().rect.width);
+				int maxCol = (int)((myRect.rect.width*2.5) / (itemButton.GetComponent<RectTransform>().rect.width + 15));
 				int rowNum = 3;
 				Item quickItem = new Item(playInv.items[index]);
 				//Debug.Log (quickItem.name + quickItem.count);
@@ -132,8 +135,8 @@ public class SellingMenu : MonoBehaviour {
 				
 				button.GetComponent<RectTransform>().anchorMax = new Vector2(0f,0f);
 				//Debug.Log (itemCount);
-				float xLoc =  ((itemCount%maxCol * 50)+ 50);
-				float yLoc = myRect.rect.height - (((int)(itemCount/2))* 50 + 50);
+				float xLoc =  ((itemCount%maxCol * 50)+20);
+				float yLoc = myRect.rect.height - (((int)(itemCount/maxCol))* 85 + 50);
 				button.transform.parent = panel.transform;
 			//	Debug.Log ("before translate");
 			//	Debug.Log (button.transform.localPosition);
@@ -165,7 +168,7 @@ public class SellingMenu : MonoBehaviour {
 				int index = i;
 				//				Debug.Log ("creating button");
 				GameObject button = (GameObject) Instantiate(itemButton);
-				int maxCol = 3;
+				int maxCol = (int)((myRect.rect.width*2.5) / (itemButton.GetComponent<RectTransform>().rect.width + 15));
 				int rowNum = 3;
 				//Ore quickItem = new Ore(contInv.ores[index]);
 				Ore quickItem = new Ore();//this.gameObject.AddComponent<Ore>();
@@ -177,8 +180,8 @@ public class SellingMenu : MonoBehaviour {
 				
 				button.GetComponent<RectTransform>().anchorMax = new Vector2(0f,0f);
 				//Debug.Log (itemCount);
-				float xLoc =  ((itemCount%maxCol * 50)+ 50);
-				float yLoc = myRect.rect.height - (((int)(itemCount/2))* 50 + 50);
+				float xLoc =  ((itemCount%maxCol * 50)+20);
+				float yLoc = myRect.rect.height - (((int)(itemCount/maxCol))* 85 + 50);
 				button.transform.parent = panel.transform;
 			//	Debug.Log ("before translate");
 			//	Debug.Log (button.transform.localPosition);

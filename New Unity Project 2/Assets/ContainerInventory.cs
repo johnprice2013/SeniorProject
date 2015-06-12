@@ -15,7 +15,7 @@ public class ContainerInventory : InventoryScript {
 		startUp();
 		invID = this.transform.GetComponent<ASRoomObject>().selfID;
 		Random.seed = invID;
-		numOfItems = Random.Range (0,5);
+		numOfItems = Random.Range (5,7);
 		itemList = GameObject.Find ("ItemList");
 		populate();
 
@@ -30,17 +30,19 @@ public class ContainerInventory : InventoryScript {
 
 	public void populate()
 	{
+//		Debug.Log ("adding items to container");
 		int totalCash = 0;
 		for(int i = 0; i < numOfItems; i++)
 		{
 			itemToAdd = getRandomItem();
 			addSingleItem (itemToAdd);
-			Debug.Log (itemToAdd.name + " "  +  invID);
+//			Debug.Log (itemToAdd.name + " "  +  invID);
 			if(itemToAdd.name == "Old Earth Cash")
 			{
 				totalCash++;
 				i--;
 			}
+//			Debug.Log ("added");
 		}
 		//Debug.Log ("Found " + totalCash + " old earth dollars");
 	}

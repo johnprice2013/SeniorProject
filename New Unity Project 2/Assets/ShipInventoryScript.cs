@@ -12,6 +12,8 @@ public class ShipInventoryScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		ores = new List<Ore>();
+		if(GameObject.Find ("Saver").GetComponent<SaveGame>().ores != null)
+		{
 		foreach (var myVar in GameObject.Find ("Saver").GetComponent<SaveGame>().ores)
 		{
 			int tempInt = myVar.count;
@@ -22,6 +24,7 @@ public class ShipInventoryScript : MonoBehaviour {
 				oreToAdd = oreToAdd.getSingleOre(myVar);
 				addSingleItem(oreToAdd);
 			}
+		}
 		}
 		foreach(var myVar in ores)
 		{

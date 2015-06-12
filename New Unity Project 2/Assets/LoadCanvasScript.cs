@@ -34,7 +34,7 @@ public class LoadCanvasScript : MonoBehaviour {
 				quickButton.transform.parent = this.transform.FindChild("Panel");
 				quickButton.transform.localPosition = new Vector2(0, localPos * -35 + 50);
 				localPos++;
-				Debug.Log (quickButton.transform.localPosition);
+//				Debug.Log (quickButton.transform.localPosition);
 				quickButton.GetComponentInChildren<Text>().text = f.Name.Remove(f.Name.Length-5);
 				string quickString = f.Name;
 				quickButton.GetComponent<Button>().onClick.AddListener(() => {this.loadGame(quickString);});

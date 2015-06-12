@@ -19,12 +19,14 @@ public class ShipController : MonoBehaviour {
 	public GameObject shipDockPoint;
 	public bool docked = false;
 	public bool linedUp = false;
+	public float rotAccel = 0f;
 	// Use this for initialization
 	void Start () {
 		cameras = GetComponentsInChildren<Camera>();
 		mLook = GetComponent<MouseLook>();
 		GameObject.Find ("MainShip").GetComponentInChildren<MeshRenderer>().renderer.enabled = false;
 		shipDockPoint = this.transform.FindChild("ShipDockPort").FindChild("ShipDockPoint").gameObject;
+		rotAccel = 20f;
 	}
 
 	void Update()
@@ -63,7 +65,7 @@ public class ShipController : MonoBehaviour {
 				Vector3 myV = this.transform.localEulerAngles;
 				if(myV.x >= 180)
 				{
-					myV.x = ((360f - myV.x) * .99f);
+					myV.x = ((360f - myV.x) * rotAccel);
 					if(myV.x > 359.5f || myV.x < .5f)
 					{
 						myV.x = 0f;
@@ -71,7 +73,7 @@ public class ShipController : MonoBehaviour {
 				}
 				else
 				{
-					myV.x = myV.x * .99f;
+					myV.x = myV.x * rotAccel;
 				}
 				if(myV.y > 270f)
 				{
@@ -81,7 +83,7 @@ public class ShipController : MonoBehaviour {
 					}
 					else
 					{
-					myV.y = ((myV.y * .99f) + 270 * .01f);
+					myV.y = ((myV.y * rotAccel) + 270 * .01f);
 					}
 				}
 				else
@@ -92,7 +94,7 @@ public class ShipController : MonoBehaviour {
 					}
 					else
 					{
-					myV.y = (myV.y * .99f) - (90 * .01f);
+					myV.y = (myV.y * rotAccel) - (90 * .01f);
 					}
 				}
 				if(myV.z < 180f)
@@ -103,7 +105,7 @@ public class ShipController : MonoBehaviour {
 					}
 					else
 					{
-						myV.z = myV.z * .99f;
+						myV.z = myV.z * rotAccel;
 					}
 				}
 				else
@@ -114,7 +116,7 @@ public class ShipController : MonoBehaviour {
 					}
 					else
 					{
-						myV.z = ((360f - myV.z) * .99f);;
+						myV.z = ((360f - myV.z) * rotAccel);;
 					}
 				}
 				this.transform.localEulerAngles = myV;

@@ -18,8 +18,9 @@ public class RelativeDistanceInfo : MonoBehaviour {
 		playerShip = GameObject.FindGameObjectWithTag("Player");
 		transform.localScale = new Vector3(.5f,.5f,.5f);
 		transform.position =  parent.transform.position+new Vector3(500f,500f,500f);
-		shipsList = new GameObject[5];
-		for(int x = 0; x<5; x++)
+		int numShips = Random.Range (1,3);
+		shipsList = new GameObject[numShips];
+		for(int x = 0; x<numShips; x++)
 		{
 			shipsList[x] = (GameObject)Instantiate (enemyShip, transform.position + new Vector3((float)x*2, 0f, 0f), Quaternion.identity);
 			shipsList[x].transform.parent = this.gameObject.transform;

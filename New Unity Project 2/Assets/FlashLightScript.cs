@@ -30,14 +30,14 @@ public class FlashLightScript : MonoBehaviour {
 			hitPoint = new Vector3(0f,0f,0f);
 		}
 
-		if(on && Input.GetKey(KeyCode.F) && paused == false)
+		if(on && Input.GetKey(KeyCode.Tab) && paused == false)
 		{
 			theLight.enabled = false;
 			on = false;
 			StartCoroutine(lightWait());
 
 		}
-		else if(!on && Input.GetKey(KeyCode.F) && paused == false)
+		else if(!on && Input.GetKey(KeyCode.Tab) && paused == false)
 		{
 			theLight.enabled = true;
 			on = true;

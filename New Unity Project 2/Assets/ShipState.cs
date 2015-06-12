@@ -13,7 +13,7 @@ public abstract class ShipState : MonoBehaviour {
 	public GameObject star;
 	public GameObject enemyArea;
 	public bool beingTracked;
-
+	public float rotAccel;
 
 
 	public GameObject player;
@@ -23,7 +23,7 @@ public abstract class ShipState : MonoBehaviour {
 		cameras = GetComponentsInChildren<Camera>();
 		mLook = GetComponent<MouseLook>();
 		GameObject.Find ("MainShip").GetComponentInChildren<MeshRenderer>().renderer.enabled = false;
-
+		rotAccel = .99f;
 		player = GameObject.FindGameObjectWithTag("PlayerBody");
 	}
 	
@@ -119,7 +119,7 @@ public class ShipStateInControl : ShipState
 	{
 		if(this.GetComponent<ShipControl>().docking)
 		{
-			Debug.Log ("ship Switching to docking state");
+	//		Debug.Log ("ship Switching to docking state");
 			this.GetComponent<ShipControl>().state = gameObject.AddComponent<ShipStateDocking>();
 			disableMouseLook();
 			Destroy (this);
@@ -127,7 +127,7 @@ public class ShipStateInControl : ShipState
 
 		if(count >29 && Input.GetKey (KeyCode.LeftShift))
 		{
-			Debug.Log ("Ship switching to look state");
+	//		Debug.Log ("Ship switching to look state");
 			this.GetComponent<ShipControl>().state = gameObject.AddComponent<ShipStateInMenu>();
 			disableMouseLook();
 
@@ -137,7 +137,7 @@ public class ShipStateInControl : ShipState
 
 		if(Input.GetKey(KeyCode.R))
 		{
-			Debug.Log ("ship switching to no control state");
+	//		Debug.Log ("ship switching to no control state");
 			player.GetComponent<PlayerControl>().piloting = false;
 			disableCameras();
 			disableMouseLook();
@@ -204,14 +204,14 @@ public class ShipStateNoControl : ShipState
 	{
 		if(player.GetComponent<PlayerControl>().state.seated == true && player.GetComponent<PlayerControl>().docked == false)
 		{
-			Debug.Log ("ship switching to in control state");
+//			Debug.Log ("ship switching to in control state");
 			this.GetComponent<ShipControl>().state = gameObject.AddComponent<ShipStateInControl>();
 			Destroy (this);
 		}
 
 		if(player.GetComponent<PlayerControl>().state.seated == true && player.GetComponent<PlayerControl>().docked == false && player.GetComponent<ShipControl>().docking == false)
 		{
-			Debug.Log ("ship switching to in control state");
+//			Debug.Log ("ship switching to in control state");
 			this.GetComponent<ShipControl>().state = gameObject.AddComponent<ShipStateInControl>();
 			Destroy(this);
 		}
@@ -244,7 +244,7 @@ public class ShipStateDocking : ShipState
 		{
 			//this.transform.localRotation = dockingObject.transform.localRotation;
 			this.transform.localEulerAngles = new Vector3(0f,270f,0f);
-			Debug.Log ("lined up");
+//			Debug.Log ("lined up");
 			this.GetComponent<ShipControl>().linedUp = true;
 			//Debug.Log (this.transform.localRotation);
 			//Debug.Log (dockingObject.transform.localRotation);
@@ -256,7 +256,7 @@ public class ShipStateDocking : ShipState
 			Vector3 myV = this.transform.localEulerAngles;
 			if(myV.x >= 180)
 			{
-				myV.x = ((360f - myV.x) * .99f);
+				myV.x = ((360f - myV.x) * rotAccel);
 				if(myV.x > 359.5f || myV.x < .5f)
 				{
 					myV.x = 0f;
@@ -264,7 +264,7 @@ public class ShipStateDocking : ShipState
 			}
 			else
 			{
-				myV.x = myV.x * .99f;
+				myV.x = myV.x * rotAccel;
 			}
 			if(myV.y > 270f)
 			{
@@ -274,7 +274,7 @@ public class ShipStateDocking : ShipState
 				}
 				else
 				{
-					myV.y = ((myV.y * .99f) + 270 * .01f);
+					myV.y = ((myV.y * rotAccel) + 270 * .01f);
 				}
 			}
 			else
@@ -285,7 +285,7 @@ public class ShipStateDocking : ShipState
 				}
 				else
 				{
-					myV.y = (myV.y * .99f) - (90 * .01f);
+					myV.y = (myV.y * rotAccel) - (90 * .01f);
 				}
 			}
 			if(myV.z < 180f)
@@ -296,7 +296,7 @@ public class ShipStateDocking : ShipState
 				}
 				else
 				{
-					myV.z = myV.z * .99f;
+					myV.z = myV.z * rotAccel;
 				}
 			}
 			else
@@ -307,7 +307,7 @@ public class ShipStateDocking : ShipState
 				}
 				else
 				{
-					myV.z = ((360f - myV.z) * .99f);;
+					myV.z = ((360f - myV.z) * rotAccel);;
 				}
 			}
 			this.transform.localEulerAngles = myV;
@@ -320,7 +320,7 @@ public class ShipStateDocking : ShipState
 	{
 		if(this.GetComponent<ShipControl>().docked == true)
 		{
-			Debug.Log ("ship switching to no control state");
+	//		Debug.Log ("ship switching to no control state");
 			this.GetComponent<ShipControl>().state = gameObject.AddComponent<ShipStateNoControl>();
 			Destroy (this);
 		}

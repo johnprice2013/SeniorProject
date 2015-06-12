@@ -61,8 +61,8 @@ public class ContainerLootableCheck : MonoBehaviour {
 				//prompt.transform.FindChild("Panel").gameObject.renderer.enabled = false;
 					if(Input.GetKey (KeyCode.E) && inMenu == false && waiting == false)
 					{
-					player.GetComponent<PlayerState>().lockCameras();
-					player.GetComponent<PlayerState>().lockRotation();
+					//player.GetComponent<PlayerState>().lockCameras();
+					//player.GetComponent<PlayerState>().lockRotation();
 						StartCoroutine(menuWait());
 						realGUI.SetActive(true);
 					transform.FindChild("OpenContainerAudio").GetComponent<AudioSource>().Play();
@@ -75,8 +75,8 @@ public class ContainerLootableCheck : MonoBehaviour {
 					}
 					else if(Input.GetKey(KeyCode.E) && inMenu == true && waiting == false)
 					{
-					player.GetComponent<PlayerState>().unlockCameras();
-					player.GetComponent<PlayerState>().unlockRotation();
+					//player.GetComponent<PlayerState>().unlockCameras();
+					//player.GetComponent<PlayerState>().unlockRotation();
 						StartCoroutine(menuWait());
 					transform.FindChild("CloseContainerAudio").GetComponent<AudioSource>().Play();
 
@@ -107,8 +107,8 @@ public class ContainerLootableCheck : MonoBehaviour {
 		else if(inMenu == true)
 		{
 			realGUI.SetActive (false);
-			player.GetComponent<PlayerState>().unlockCameras();
-			player.GetComponent<PlayerState>().unlockRotation();
+		//	player.GetComponent<PlayerState>().unlockCameras();
+	//		player.GetComponent<PlayerState>().unlockRotation();
 			inMenu = false;
 		}
 		else
@@ -120,7 +120,7 @@ public class ContainerLootableCheck : MonoBehaviour {
 	public IEnumerator menuWait()
 	{
 		waiting = true;
-		yield return new WaitForSeconds(.2f);
+		yield return new WaitForSeconds(.5f);
 		waiting = false;
 	}
 

@@ -1,22 +1,21 @@
-10
+9
 :
 Chair,10,50
 :
-Old Rusty Book,15,40
+Old Textbook,15,40
 :
 Gold Bar,150,5
 :
-Cigarettes,12,55
+Cigarette,12,55
 :
-Old Earth Cash,25,300
+Old World Cash,25,300
 :
 Antique Statue,50,10
 :
-Diary,10,15
+Journal,10,15
 :
 Family Photo,25,25
 :
-School Textbook,500,10
-:
-thing,2,5
+School Bag,500,10
+
 

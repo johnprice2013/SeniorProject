@@ -17,7 +17,7 @@ public class HandleTriggerRenderStation : MonoBehaviour {
 	{
 		if(collider.transform.name == "Capsule")
 		{
-			Debug.Log ("entering");
+//			Debug.Log ("entering");
 			foreach(Transform item in this.transform)
 			{
 				if(item.transform.name == "ASParentObject")

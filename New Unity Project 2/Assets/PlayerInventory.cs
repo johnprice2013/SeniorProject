@@ -8,6 +8,9 @@ public class PlayerInventory : InventoryScript
 	{
 		GameObject itemList = GameObject.Find ("ItemList");
 		items = new List<Item>();
+		if(GameObject.Find ("Saver").GetComponent<SaveGame>().items != null)
+		{
+
 		foreach(var myVar in GameObject.Find ("Saver").GetComponent<SaveGame>().items)
 		{
 		//	Debug.Log ("adding " + myVar.name + " " + myVar.count);
@@ -18,6 +21,7 @@ public class PlayerInventory : InventoryScript
 //				Debug.Log ("adding");
 				addSingleItem(myVar);
 			}
+		}
 		}
 //		for(int i = 0; i< 100; i++)
 //		{

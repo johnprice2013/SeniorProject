@@ -204,20 +204,20 @@ public class MissionInfo : MonoBehaviour {
 	public void checkIfLocal()
 	{
 		Debug.Log ("searching locally for station with ID of " + tempMissionStationNumber);
-		foreach(GameObject station in GameObject.FindGameObjectsWithTag("station"))
-		{
-			if(station.GetComponent<StationData>().stationSeed == tempMissionStationNumber)
-			{
-				isInLocalArea = true;
-				flaggedAsLocal = true;
-				missionStation = station;
-				//this.transform.parent = station.transform;
-				Debug.Log ("creating enemy strike");
-				missionStation.GetComponent<StationData>().createEnemyStrike();
-
-			}
-
-		}
+//		foreach(GameObject station in GameObject.FindGameObjectsWithTag("station"))
+//		{
+//			if(station.GetComponent<StationData>().stationSeed == tempMissionStationNumber)
+//			{
+//				isInLocalArea = true;
+//				flaggedAsLocal = true;
+//				missionStation = station;
+//				//this.transform.parent = station.transform;
+//				Debug.Log ("creating enemy strike");
+//				missionStation.GetComponent<StationData>().createEnemyStrike();
+//
+//			}
+//
+//		}
 		if(flaggedAsLocal == false)
 		{
 			isInLocalArea = false;
@@ -235,20 +235,20 @@ public class MissionInfo : MonoBehaviour {
 	{
 		yield return new WaitForSeconds(.5f);
 		Debug.Log ("searching locally for station with ID of " + tempMissionStationNumber);
-		foreach(GameObject station in GameObject.FindGameObjectsWithTag("station"))
-		{
-			if(station.GetComponent<StationData>().stationSeed == tempMissionStationNumber)
-			{
-				isInLocalArea = true;
-				flaggedAsLocal = true;
-				missionStation = station;
-				//this.transform.parent = station.transform;
-				Debug.Log ("creating enemy strike");
-				missionStation.GetComponent<StationData>().createEnemyStrike();
-				
-			}
-			
-		}
+//		foreach(GameObject station in GameObject.FindGameObjectsWithTag("station"))
+//		{
+//			if(station.GetComponent<StationData>().stationSeed == tempMissionStationNumber)
+//			{
+//				isInLocalArea = true;
+//				flaggedAsLocal = true;
+//				missionStation = station;
+//				//this.transform.parent = station.transform;
+//				Debug.Log ("creating enemy strike");
+//				missionStation.GetComponent<StationData>().createEnemyStrike();
+//				
+//			}
+//			
+//		}
 		if(flaggedAsLocal == false)
 		{
 			isInLocalArea = false;

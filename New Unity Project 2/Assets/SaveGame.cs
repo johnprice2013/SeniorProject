@@ -19,6 +19,7 @@ public class SaveGame : MonoBehaviour {
 	public List<Item> items;
 	public List<GameObject> realMissions;
 	public GameObject tempmission;
+	public int currency;
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad(this);
@@ -59,9 +60,19 @@ public class SaveGame : MonoBehaviour {
 		SaveFile.WriteLine(s.sectorX);
 		SaveFile.WriteLine(s.sectorY);
 		SaveFile.WriteLine(s.sectorZ);
-		SaveFile.WriteLine(s.starX);
-		SaveFile.WriteLine(s.starY);
-		SaveFile.WriteLine(s.starZ);
+		if(GameObject.Find ("ShipInterior").GetComponent<ShipControl>().distanceToDock.magnitude < 1f)
+		{
+		SaveFile.WriteLine(s.starX+200);
+		SaveFile.WriteLine(s.starY+200);
+		SaveFile.WriteLine(s.starZ+200);
+		}
+		else
+		{
+			SaveFile.WriteLine(s.starX);
+			SaveFile.WriteLine(s.starY);
+			SaveFile.WriteLine(s.starZ);
+		}
+		SaveFile.WriteLine (GameObject.Find("Capsule").GetComponent<Initialize>().currency);
 		SaveFile.WriteLine("Items");
 		PlayerInventory playInv = GameObject.Find ("Inventory").GetComponent<PlayerInventory>();
 		SaveFile.WriteLine(playInv.items.Count);
@@ -89,6 +100,8 @@ public class SaveGame : MonoBehaviour {
 				if(child.GetComponent<MissionDetails>().mission.missionType == "Kill")
 				{
 					SaveFile.WriteLine ("Kill");
+					SaveFile.WriteLine (child.GetComponent<KillMission>().missionName);
+					SaveFile.WriteLine (child.GetComponent<KillMission>().missionNumber);
 					SaveFile.WriteLine (child.GetComponent<KillMission>().numToKill);
 					SaveFile.WriteLine (child.GetComponent<KillMission>().numKilled);
 					SaveFile.WriteLine (child.GetComponent<KillMission>().missionFlavorText);
@@ -97,6 +110,8 @@ public class SaveGame : MonoBehaviour {
 				else if (child.GetComponent<MissionDetails>().mission.missionType == "Fetch Ore")
 				{
 					SaveFile.WriteLine ("Fetch Ore");
+					SaveFile.WriteLine (child.GetComponent<FetchOreMission>().missionName);
+					SaveFile.WriteLine (child.GetComponent<FetchOreMission>().missionNumber);
 					Debug.Log (child.GetComponent<FetchOreMission>().oreType);
 					SaveFile.WriteLine (child.GetComponent<FetchOreMission>().oreType.oreName);
 					SaveFile.WriteLine (child.GetComponent<FetchOreMission>().amountToGet);
@@ -106,6 +121,8 @@ public class SaveGame : MonoBehaviour {
 				else if(child.GetComponent<MissionDetails>().mission.missionType == "Fetch Item")
 				{
 					SaveFile.WriteLine ("Fetch Item");
+					SaveFile.WriteLine (child.GetComponent<FetchItemMission>().missionName);
+					SaveFile.WriteLine (child.GetComponent<FetchItemMission>().missionNumber);
 					SaveFile.WriteLine (child.GetComponent<FetchItemMission>().itemType.name);
 					SaveFile.WriteLine (child.GetComponent<FetchItemMission>().amountToGet);
 					SaveFile.WriteLine (child.GetComponent<FetchItemMission>().missionFlavorText);
@@ -131,9 +148,9 @@ public class SaveGame : MonoBehaviour {
 		{
 			var SaveFile = File.OpenText ("SaveGame");
 			string fileText = SaveFile.ReadToEnd();
-			Debug.Log (fileText);
+//			Debug.Log (fileText);
 			SaveFile.Close ();
-			Debug.Log ("Read from file");
+//			Debug.Log ("Read from file");
 		}
 		yield return new WaitForSeconds(2f);
 		saveWait = false;
@@ -142,8 +159,8 @@ public class SaveGame : MonoBehaviour {
 	public IEnumerator FetchAndLoadData(string passedFile = "SaveGame")
 	{
 		saveWait = true;
-		Debug.Log ("Reading from file");
-		Debug.Log (passedFile);
+//		Debug.Log ("Reading from file");
+//		Debug.Log (passedFile);
 		fileName = passedFile;
 		if(File.Exists (fileName))
 		{
@@ -151,6 +168,7 @@ public class SaveGame : MonoBehaviour {
 			getSeed(SaveFile);
 			getSector(SaveFile);
 			getPosition(SaveFile);
+			currency = System.Convert.ToInt32(SaveFile.ReadLine());
 			getItems(SaveFile);
 			getOres(SaveFile);
 			getMissions(SaveFile);
@@ -158,7 +176,7 @@ public class SaveGame : MonoBehaviour {
 		//	realMissions = new GameObject[4];
 			foreach(var mis in realMissions)
 			{
-				Debug.Log (mis.GetComponent<MissionDetails>().mission.missionInfoText);
+//				Debug.Log (mis.GetComponent<MissionDetails>().mission.missionInfoText);
 			//	realMissions[quickIndex] = (GameObject)Instantiate(tempmission);
 			//	realMissions[quickIndex].GetComponent<MissionDetails>().mission = mis;
 			//	realMissions[quickIndex].transform.parent = this.transform;
@@ -176,7 +194,7 @@ public class SaveGame : MonoBehaviour {
 			//string fileText = SaveFile.ReadToEnd();
 			//Debug.Log (fileText);
 			SaveFile.Close ();
-			Debug.Log ("Read from file");
+//			Debug.Log ("Read from file");
 			saveWait = false;
 			Application.LoadLevel("asdf");
 		}
@@ -210,7 +228,7 @@ public class SaveGame : MonoBehaviour {
 
 		if(myFile.Peek() == 'I')
 		{
-			Debug.Log ("reading items");
+	//		Debug.Log ("reading items");
 			myFile.ReadLine();
 			int i = 0;
 			if(!myFile.EndOfStream)
@@ -226,7 +244,7 @@ public class SaveGame : MonoBehaviour {
 				//items[i] = GameObject.Find ("ItemList").GetComponent<ItemListInitializer>().fetchExplicit(itemName);
 			//	Debug.Log (items[i].name);
 
-					Debug.Log (items[i].name);
+//					Debug.Log (items[i].name);
 				
 				items[i].setCount(itemCount);
 //				Debug.Log (items[i].count);
@@ -238,10 +256,10 @@ public class SaveGame : MonoBehaviour {
 	public void getOres(StreamReader myFile)
 	{
 		OreInfoScript info = GameObject.Find ("OreInfo").GetComponent<OreInfoScript>();
-		Debug.Log(info.ores[0].count + " " + 0);
+//		Debug.Log(info.ores[0].count + " " + 0);
 		if(myFile.Peek() == '?')
 		{
-			Debug.Log ("reading Ores");
+	//		Debug.Log ("reading Ores");
 			myFile.ReadLine();
 			int i = 0;
 			if(!myFile.EndOfStream)
@@ -279,7 +297,7 @@ public class SaveGame : MonoBehaviour {
 	}
 	public void getMissions(StreamReader myFile)
 	{
-		Debug.Log ("reading Missions");
+	//	Debug.Log ("reading Missions");
 		myFile.ReadLine();
 		int i = 0;
 		while(!myFile.EndOfStream)
@@ -287,7 +305,9 @@ public class SaveGame : MonoBehaviour {
 			string missionType = myFile.ReadLine();
 			if(missionType == "Fetch Item")
 			{
-				Debug.Log ("found fetch item mission");
+	//			Debug.Log ("found fetch item mission");
+				string missionName = myFile.ReadLine();
+				int missionNumber = System.Convert.ToInt32(myFile.ReadLine());
 				string itemName = myFile.ReadLine ();
 				int itemCount = System.Convert.ToInt32(myFile.ReadLine());
 				string flavor = myFile.ReadLine ();
@@ -295,24 +315,37 @@ public class SaveGame : MonoBehaviour {
 
 				Item itemToAdd = GameObject.Find ("ItemList").GetComponent<ItemListInitializer>().fetchExplicit(itemName);
 				GameObject quickMission = (GameObject)Instantiate(tempmission);
-				FetchItemMission fetchMission = gameObject.AddComponent<FetchItemMission>();
-				fetchMission.itemType = itemToAdd;
-				fetchMission.amountToGet = itemCount;
-				fetchMission.missionFlavorText = flavor;
-				fetchMission.missionInfoText = missionInfo;
-				fetchMission.missionType = "Fetch Item";
-				fetchMission.started = true;
-				quickMission.GetComponent<MissionDetails>().mission = fetchMission;
+				quickMission.AddComponent<FetchItemMission>();
+				quickMission.GetComponent<FetchItemMission>().missionName = missionName;
+				quickMission.GetComponent<FetchItemMission>().missionNumber = missionNumber;
+				quickMission.GetComponent<FetchItemMission>().itemType = itemToAdd;
+				quickMission.GetComponent<FetchItemMission>().amountToGet = itemCount;
+				quickMission.GetComponent<FetchItemMission>().missionFlavorText = flavor;
+				quickMission.GetComponent<FetchItemMission>().missionInfoText = missionInfo;
+				quickMission.GetComponent<FetchItemMission>().missionType = "Fetch Item";
+				quickMission.GetComponent<FetchItemMission>().started = true;
+				//FetchItemMission fetchMission = gameObject.AddComponent<FetchItemMission>();
+				//fetchMission.itemType = itemToAdd;
+				//fetchMission.amountToGet = itemCount;
+				//fetchMission.missionFlavorText = flavor;
+				//fetchMission.missionInfoText = missionInfo;
+				//fetchMission.missionType = "Fetch Item";
+				//fetchMission.started = true;
+				//Debug.Log (fetchMission.itemType.name);
+	//			Debug.Log ("doing mission stuff");
+				quickMission.GetComponent<MissionDetails>().mission = quickMission.GetComponent<FetchItemMission>();//fetchMission;
 				quickMission.GetComponent<MissionDetails>().started = true;
 
 				realMissions.Insert(0,quickMission);
 				realMissions[0].transform.parent = this.transform;
 
-				Debug.Log (fetchMission.itemType.name);
+//				Debug.Log (fetchMission.itemType.name);
 			}
 			else if(missionType == "Fetch Ore")
 			{
-				Debug.Log ("found fetch ore mission");
+//				Debug.Log ("found fetch ore mission");
+				string missionName = myFile.ReadLine();
+				int missionNumber = System.Convert.ToInt32(myFile.ReadLine());
 				string itemName = myFile.ReadLine ();
 				int itemCount = System.Convert.ToInt32(myFile.ReadLine());
 				string flavor = myFile.ReadLine ();
@@ -320,38 +353,64 @@ public class SaveGame : MonoBehaviour {
 				GameObject quickMission = (GameObject)Instantiate(tempmission);
 				Ore itemToAdd = new Ore();
 				itemToAdd = GameObject.Find ("OreInfo").GetComponent<OreInfoScript>().fetchExplicit(itemName);
-				FetchOreMission fetchMission = gameObject.AddComponent<FetchOreMission>();
+				quickMission.AddComponent<FetchOreMission>();
+				quickMission.GetComponent<FetchOreMission>().missionName = missionName;
+				quickMission.GetComponent<FetchOreMission>().missionNumber = missionNumber;
+				quickMission.GetComponent<FetchOreMission>().oreType = itemToAdd;
+				quickMission.GetComponent<FetchOreMission>().amountToGet = itemCount;
+				quickMission.GetComponent<FetchOreMission>().missionType = "Fetch Ore";
+				quickMission.GetComponent<FetchOreMission>().missionFlavorText = flavor;
+				quickMission.GetComponent<FetchOreMission>().missionInfoText = missionInfo;
+				quickMission.GetComponent<FetchOreMission>().started = true;
+				//FetchOreMission fetchMission = gameObject.AddComponent<FetchOreMission>();
 				//fetchMission.oreType = new Ore();
 				//fetchMission.oreType = fetchMission.oreType.getOre(itemToAdd);
-				fetchMission.oreType = itemToAdd;
-				fetchMission.amountToGet = itemCount;
-				fetchMission.missionFlavorText = flavor;
-				fetchMission.missionInfoText = missionInfo;
-				fetchMission.missionType = "Fetch Ore";
-				fetchMission.started = true;
-				quickMission.GetComponent<MissionDetails>().mission = fetchMission;
+				//fetchMission.oreType = itemToAdd;
+				//fetchMission.amountToGet = itemCount;
+				//fetchMission.missionFlavorText = flavor;
+			//	fetchMission.missionInfoText = missionInfo;
+			//	fetchMission.missionType = "Fetch Ore";
+			//	fetchMission.started = true;
+				quickMission.GetComponent<MissionDetails>().mission = quickMission.GetComponent<FetchOreMission>();
 				quickMission.GetComponent<MissionDetails>().started = true;
 				realMissions.Insert(0,quickMission);
 
 				realMissions[0].transform.parent = this.transform;
 				//missions.Insert(0,fetchMission);
-				Debug.Log (fetchMission.oreType.oreName);
-				Debug.Log (missions.Count);
+//				Debug.Log (fetchMission.oreType.oreName);
+//				Debug.Log (missions.Count);
 			}
 			else if(missionType == "Kill")
 			{
-				Debug.Log ("found kill mission");
+	//			Debug.Log ("found kill mission");
+				string missionName = myFile.ReadLine();
+				int missionNumber = System.Convert.ToInt32(myFile.ReadLine());
 				int killAmount = System.Convert.ToInt32(myFile.ReadLine());
 				int numKilled = System.Convert.ToInt32(myFile.ReadLine());
 				string flavor = myFile.ReadLine ();
 				string missionInfo = myFile.ReadLine ();
-				KillMission killMission = gameObject.AddComponent<KillMission>();
-				killMission.missionType = "Kill";
-				killMission.missionFlavorText = flavor;
-				killMission.missionInfoText = missionInfo;
-				killMission.numKilled = numKilled;
-				killMission.numToKill = killAmount;
-				missions.Insert(0,killMission);
+				GameObject quickMission = (GameObject)Instantiate(tempmission);
+				quickMission.AddComponent<KillMission>();
+				quickMission.GetComponent<KillMission>().missionName = missionName;
+				quickMission.GetComponent<KillMission>().missionNumber = missionNumber;
+				quickMission.GetComponent<KillMission>().missionType = "Kill";
+				quickMission.GetComponent<KillMission>().missionFlavorText = flavor;
+				quickMission.GetComponent<KillMission>().missionInfoText = missionInfo;
+				quickMission.GetComponent<KillMission>().numKilled = numKilled;
+				quickMission.GetComponent<KillMission>().numToKill = killAmount;
+				quickMission.GetComponent<KillMission>().started = true;
+				quickMission.GetComponent<MissionDetails>().mission = quickMission.GetComponent<KillMission>();
+				quickMission.GetComponent<MissionDetails>().started = true;
+				realMissions.Insert(0,quickMission);
+				
+				realMissions[0].transform.parent = this.transform;
+				//KillMission killMission = gameObject.AddComponent<KillMission>();
+				//killMission.missionType = "Kill";
+				//killMission.missionFlavorText = flavor;
+				//killMission.missionInfoText = missionInfo;
+				//killMission.numKilled = numKilled;
+				//killMission.numToKill = killAmount;
+				//missions.Insert(0,quickMission);
 
 			}
 

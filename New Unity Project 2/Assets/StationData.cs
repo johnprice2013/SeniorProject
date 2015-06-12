@@ -23,19 +23,14 @@ public class StationData : MonoBehaviour {
 			GameObject newObject = (GameObject) Instantiate (mission);
 			newObject.GetComponent<MissionInfo>().missionStation = (GameObject)this.gameObject;
 			newObject.GetComponent<MissionDetails>().missionNumber = x;
+//				Debug.Log ("set mission number to " + x);
 			newObject.GetComponent<MissionInfo>().missionNumber = x;
 			newObject.transform.parent = this.gameObject.transform;
 		}
 		}
 	}
 
-	public void createEnemyStrike()
-	{		
-			
-		enemyAreaInstance = (GameObject)Instantiate(enemyArea);
-		enemyAreaInstance.transform.parent = this.gameObject.transform;
 
-	}
 	
 	// Update is called once per frame
 	void Update () {

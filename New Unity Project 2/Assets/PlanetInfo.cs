@@ -47,11 +47,24 @@ public class PlanetInfo : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(Application.loadedLevelName == "StartingScene")
+		{
+			initializePlanet2();
+		}
+		else
+		{
 		initializePlanet();
+		}
+//		Debug.Log ("made it");
 		setDetails();
+//		Debug.Log("made it 2");
 		setColors();
-		orbGen = GetComponent<OrbitalGenerator>();
-		createOrbitingBodies(seed);
+//		Debug.Log("made it 3");
+		if(Application.loadedLevelName != "StartingScene")
+		{
+			orbGen = GetComponent<OrbitalGenerator>();
+			createOrbitingBodies(seed);
+		}
 	}
 
 
@@ -68,10 +81,53 @@ public class PlanetInfo : MonoBehaviour {
 
 	}
 
+	public void initializePlanet2()
+	{
+		
+//		G = 50f;
+//		star = GameObject.FindGameObjectWithTag("star");
+//		Vector3 temp = transform.position - star.transform.position;
+//		distanceFromSun = temp.magnitude;
+//		center = GameObject.FindGameObjectWithTag("sectorCenter");
+//		planetGen = star.GetComponent<PlanetGenerator>();
+		//distanceFromStar = (transform.position - star.transform.position).magnitude;
+//		planetNum = (int)distanceFromSun/10000000;
+		seed = Random.Range (0,int.MaxValue);
+		Random.seed = seed;
+		this.GetComponent<NewMeshEditor>().seed = seed;
+		timeOffset = Random.Range (0f,10f);
+		rotationSpeed = Random.Range (100,1000);
+		planetRadius = 100000;
+		planetMass = Mathf.Pow((planetRadius/100f),2f);
+	//	starMass = star.GetComponent<movement>().starMass;
+		transform.localScale = new Vector3(planetRadius,planetRadius,planetRadius);
+//		neededVelocity = Mathf.Sqrt(G*starMass/distanceFromSun);
+//		neededRotation = neededVelocity/distanceFromSun;
+		//		tempMovTime = Time.time;
+		
+//		starMov = star.GetComponent<movement>();
+		//tempMovTime += Time.deltaTime;
+		
+		//tempRotTime = tempMovTime;
+		//totalMovTime = neededRotation * tempMovTime;
+//		starPosition = star.transform.position;
+//		tempX = (double)starPosition.x + (double)distanceFromSun * System.Math.Sin ((double)timeOffset);
+//		tempY = (double)starPosition.y + (double)distanceFromSun * System.Math.Cos ((double)timeOffset);
+//		tempZ = (double)starPosition.z;
+//		newXPosition = (float)tempX;
+//		newYPosition = (float)tempY;
+//		newZPosition = (float)tempZ;
+//		newFullPosition = new Vector3(newXPosition,newYPosition,newZPosition);
+		
+//		deltaPosition = newFullPosition-transform.position;
+//		transform.Translate(deltaPosition,Space.World);
+		
+	}
+
 
 	public void initializePlanet()
 	{
-		
+//		Debug.Log ("initializeing planet");
 		G = 50f;
 		star = GameObject.FindGameObjectWithTag("star");
 		Vector3 temp = transform.position - star.transform.position;
@@ -116,21 +172,35 @@ public class PlanetInfo : MonoBehaviour {
 	
 	}
 
+	void FixedUpdate()
+	{
+		this.transform.Rotate(.005f,.01f,.03f);
+	}
+
 	public void setColors()
 	{
 		Random.seed = planetSeed;
 		water.renderer.material.color = getRandomColor();
+//		Debug.Log ("setting water to " + water.renderer.material.color);
 		transform.renderer.material.color = getRandomColor();
+//		Debug.Log ("setting surface to " + transform.renderer.material.color);
 	}
 
 	public void setDetails()
 	{
+		if(Application.loadedLevelName != "StartingScene")
+		{
 		planetSeed = GetComponent<PlanetMovement>().seed;
 		planetScale = transform.localScale;
 		planetSector.x = GameObject.FindGameObjectWithTag("sectorCenter").GetComponent<SectorGenerator>().sectorX;
 		planetSector.y = GameObject.FindGameObjectWithTag("sectorCenter").GetComponent<SectorGenerator>().sectorY;
 		planetSector.z = GameObject.FindGameObjectWithTag("sectorCenter").GetComponent<SectorGenerator>().sectorZ;
-
+		}
+		else
+		{
+			planetSeed = seed;
+			planetScale = transform.localScale;
+		}
 		water = this.transform.FindChild("Sphere").gameObject;
 
 	}

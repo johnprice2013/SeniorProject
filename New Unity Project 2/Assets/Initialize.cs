@@ -25,6 +25,7 @@ public class Initialize : MonoBehaviour {
 		if(GameObject.Find ("SaveData") != null)
 		{
 			SaveDataStorage s = GameObject.Find ("SaveData").GetComponent<SaveDataStorage>();
+			currency = GameObject.Find ("Saver").GetComponent<SaveGame>().currency;
 			currentSector.x = s.sectorX;
 			currentSector.y = s.sectorY;
 			currentSector.z = s.sectorZ;
@@ -32,7 +33,7 @@ public class Initialize : MonoBehaviour {
 			int i = 0;
 			foreach( var mission in GameObject.Find ("Saver").GetComponent<SaveGame>().realMissions)
 			{
-				Debug.Log (mission.GetComponent<MissionDetails>().mission.missionInfoText);
+//				Debug.Log (mission.GetComponent<MissionDetails>().mission.missionInfoText);
 				mission.transform.parent = this.transform;
 				mission.GetComponent<MissionDetails>().mission.setPayout();
 				missions[i] = mission.gameObject;

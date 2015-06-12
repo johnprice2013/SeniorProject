@@ -138,11 +138,16 @@ public class MissionMenuInteract : MonoBehaviour {
 		createCloseButton(menuLevel);
 		this.transform.FindChild ("Image").GetComponent<Image>().enabled = true;
 		this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<Text>().enabled = true;
+		this.transform.FindChild("Image").GetComponent<RectTransform>().sizeDelta = new Vector2(195f,200f);//mission.GetComponent<MissionDetails>().mission.getMissionText();
+		this.transform.FindChild("Image").GetComponent<RectTransform>().localPosition = new Vector2(0f,-15f);
+
 		this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<Text>().text = mission.GetComponent<MissionDetails>().mission.getMissionText();//missionText;
+		this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<RectTransform>().localPosition = new Vector2(0f,10f);//mission.GetComponent<MissionDetails>().mission.getMissionText();
+
 		//this.transform.FindChild("Image").transform.FindChild("Text").GetComponent<Text>().text = mission.GetComponent<MissionInfo>().missionText;
 		acceptButton = (GameObject) Instantiate (showMissions);
 		acceptButton.transform.parent = this.gameObject.transform;
-		acceptButton.transform.localPosition = new Vector3(0,-50f,0);
+		acceptButton.transform.localPosition = new Vector3(0,-70f,0);
 		acceptButton.transform.localScale =  new Vector3(1,1,1);
 		acceptButton.transform.localEulerAngles = Vector3.zero;
 		acceptButton.GetComponent<Image>().enabled = true;

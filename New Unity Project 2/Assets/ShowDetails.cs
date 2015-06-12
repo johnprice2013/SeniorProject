@@ -17,7 +17,7 @@ public class ShowDetails : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		myGui = GetComponent<GUIText>();
-		myGui.transform.position = new Vector3(.85f,.95f,0f);
+		myGui.transform.position = new Vector3(.75f,.95f,0f);
 	}
 
 	void Update()
@@ -50,6 +50,6 @@ public class ShowDetails : MonoBehaviour {
 		{
 			mag = 0f;
 		}
-		myGui.text = (dMag + " " + mag );
+		myGui.text = ("Current velocity = " + dMag);
 }
 }

@@ -68,7 +68,8 @@ public class MonsterStateChasing : MonsterState
 	{
 		RaycastHit hit;
 		Vector3 dir = (player.transform.position - this.transform.position);
-		Physics.Raycast(this.transform.position, dir,out hit, 30);
+		if(Physics.Raycast(this.transform.position, dir,out hit, 30))
+		{
 		if(hit.transform.name != "Capsule")
 		{
 			//Debug.Log (hit.transform.name);
@@ -98,6 +99,7 @@ public class MonsterStateChasing : MonsterState
 
 
 			Destroy(this);
+		}
 		}
 	}
 

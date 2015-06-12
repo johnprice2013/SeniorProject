@@ -37,13 +37,13 @@ public class ShipDoorOpen : MonoBehaviour {
 		distanceToPlayer = (this.transform.position - player.transform.position).magnitude;
 		if(docked && distanceToPlayer < 1.5f && !moving && !open)// && Input.GetKey(KeyCode.E))
 		{
-			Debug.Log ("opening door");
+//			Debug.Log ("opening door");
 			StartCoroutine(openDoor());
 			//Debug.Log ("close enough to open");
 		}
 		else if(docked && distanceToPlayer > 4.5f && !moving && open)// && Input.GetKey(KeyCode.E))
 		{
-			Debug.Log ("closing door");
+//			Debug.Log ("closing door");
 			StartCoroutine(closeDoor());
 		}
 		if(lowering)

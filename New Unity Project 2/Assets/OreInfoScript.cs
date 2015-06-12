@@ -83,7 +83,7 @@ public class OreInfoScript : MonoBehaviour {
 			{
 
 				oreToReturn = oreToReturn.getOre(ores[x]);
-				Debug.Log (oreToReturn.count + " in explicit call");
+//				Debug.Log (oreToReturn.count + " in explicit call");
 			}
 		}
 		return oreToReturn;

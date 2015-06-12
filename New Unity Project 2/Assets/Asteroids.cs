@@ -57,6 +57,12 @@ public class Asteroids : MonoBehaviour {
 	public float tempVelocity = 0f;
 	public float displayVelocity = 0f;
 	public float newDelta = 0f;
+	public float timeInArea = 0f;
+	public GameObject player;
+
+
+	public GameObject enemyAreaInstance;
+	public GameObject enemyArea;
 
 	// Use this for initialization
 	void Start () {
@@ -70,6 +76,7 @@ public class Asteroids : MonoBehaviour {
 	{
 		Random.seed = asteroidSeed;
 		numOfAsteroids = Random.Range (20,41);
+		player = GameObject.Find("Capsule");
 
 	}
 
@@ -91,6 +98,21 @@ public class Asteroids : MonoBehaviour {
 		//Debug.Log (starMov.forceNumber);
 		
 	}
+
+
+
+
+
+	public void createEnemyStrike()
+	{		
+		float tempRand = Random.Range(0,5);
+		if(tempRand < 2)
+		{
+		enemyAreaInstance = (GameObject)Instantiate(enemyArea);
+		enemyAreaInstance.transform.parent = this.gameObject.transform;
+		}
+	}
+
 
 
 	public void createAsteroidField()
@@ -152,6 +174,17 @@ public class Asteroids : MonoBehaviour {
 			newDelta = 0f;
 			tempVelocity = 0f;
 		}
+		float distanceToPlayer = (this.transform.position - player.transform.position).magnitude;
+		if(distanceToPlayer <= (numOfAsteroids + 1)*200)
+		{
+			timeInArea += Time.deltaTime;
+			if(timeInArea > 30f)
+			{
+				createEnemyStrike();
+				timeInArea = 0;
+			}
+		}
+
 
 	}
 

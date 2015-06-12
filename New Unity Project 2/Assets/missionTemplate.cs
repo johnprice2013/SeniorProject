@@ -9,6 +9,7 @@ public abstract class MissionTemplate : MonoBehaviour {
 	public string missionInfoText;
 	public string missionFlavorText;
 	public int seed = 0;
+	public string missionName = "blank";
 	// Use this for initialization
 	public abstract void Start ();
 	public int missionNumber = 0;
@@ -57,16 +58,18 @@ public class KillMission : MissionTemplate
 	public int numKilled = 0;
 	public override void Start ()
 	{
+//		Debug.Log (missionNumber);
 		if(started == false)
 		{
-		Debug.Log("kill mission generated");
-		missionType = "Kill";
-		numToKill = Random.Range(3,7);
-		setFlavorText();
-		setMissionInfoText();
-		setPayout();
-		Debug.Log (getMissionText());
-		started = true;
+//			Debug.Log("kill mission generated");
+			missionType = "Kill";
+			numToKill = Random.Range(3,7);
+			setFlavorText();
+			setMissionInfoText();
+			setPayout();
+//			Debug.Log (getMissionText());
+			missionName = "Kill " + numToKill;
+			started = true;
 		}
 	}
 
@@ -77,7 +80,7 @@ public class KillMission : MissionTemplate
 
 	public override string getMissionProgress ()
 	{
-		return numKilled + " out of " + numToKill + " enemies killed.";
+		return numKilled + " out of " + numToKill + " enemies killed.  ";
 	}
 
 	public override void updateProgress()
@@ -97,13 +100,32 @@ public class KillMission : MissionTemplate
 
 	public override void setFlavorText ()
 	{
-		missionFlavorText = "flavor text not set, please implement";
+		int randomNum = Random.Range (0,4);
+		switch (randomNum)
+		{
+		case 0:
+			missionFlavorText = "We have heard rumor of bandits attacking miners in asteroid fields. This must be stopped!  ";
+				break;
+		case 1:
+			missionFlavorText = "One of our ambassadors was attacked while passing through a nearby asteroid field.  They must not escape justice!  ";
+				break;
+		case 2:
+			missionFlavorText = "You like killin' bandits in asteroid fields?  Well, today is your lucky day!  ";
+				break;
+		case 3:
+			missionFlavorText = "There is a bounty out for some bandits.  They were last seen ambushing folks in an asteroid field.  ";
+				break;
+	    default:
+		    missionFlavorText = "Bandits in an asteroid field, kill them all!  ";
+			    break;
+		}
+
 		//throw new System.NotImplementedException ();
 	}
 
 	public override void setMissionInfoText ()
 	{
-		missionInfoText = "We need you to eliminate " + numToKill + " bandits!";
+		missionInfoText = "We need you to eliminate " + numToKill + " bandits!  ";
 		//throw new System.NotImplementedException ();
 	}
 
@@ -128,14 +150,15 @@ public class FetchOreMission : MissionTemplate
 //		Debug.Log("fetch ore mission generated");
 		if(started == false)
 		{
-		missionType = "Fetch Ore";
-		oreType = GameObject.Find ("OreInfo").GetComponent<OreInfoScript>().fetchOre(Random.Range (0,1000));
+			missionType = "Fetch Ore";
+			oreType = GameObject.Find ("OreInfo").GetComponent<OreInfoScript>().fetchOre(Random.Range (0,1000));
 //		Debug.Log (oreType.oreName);
-		amountToGet = Random.Range (10,25);
-		setPayout();
-		setFlavorText();
-		setMissionInfoText();
-		started = true;
+			amountToGet = Random.Range (10,25);
+			setPayout();
+			setFlavorText();
+			setMissionInfoText();
+			missionName = "Fetch " + oreType.oreName;
+			started = true;
 		}
 //		Debug.Log (getMissionText());
 
@@ -167,18 +190,35 @@ public class FetchOreMission : MissionTemplate
 
 	public override string getMissionProgress()
 	{
-		return "Holding " + amountHeld + " out of " + amountToGet + " " + oreType.oreName;
+		return "Holding " + amountHeld + " out of " + amountToGet + " " + oreType.oreName + ".  ";
 	}
 
 	#region implemented abstract members of MissionTemplate
 	public override void setFlavorText ()
 	{
-		missionFlavorText = "this is not implemented";
-		//throw new System.NotImplementedException ();
+		int randomNum = Random.Range (0,4);
+		switch (randomNum)
+		{
+		case 0:
+			missionFlavorText = "We need your help!  We are desperately low on " + oreType.oreName + "!  We will pay you handsomely for any you can find!  ";
+			break;
+		case 1:
+			missionFlavorText = "One of our blacksmiths is looking to make a " + oreType.oreName + " blaster, but we are all out of " + oreType.oreName + "!  ";
+			break;
+		case 2:
+			missionFlavorText = "If you happen across some " + oreType.oreName + " on your travels, bring some here.  We are out and will pay big money for some!  ";
+			break;
+		case 3:
+			missionFlavorText = "One of our researchers needs some " + oreType.oreName + " for their work on n-field generators.  We will pay through the nose for it!  ";
+			break;
+		default:
+			missionFlavorText = "We need " + oreType.oreName + " for hull repairs.  We will pay good money for what you bring us!  ";
+			break;
+		}
 	}
 	public override void setMissionInfoText ()
 	{
-		missionInfoText = "We need you to bring us " + amountToGet + " units of " + oreType.oreName;
+		missionInfoText = "We need you to bring us " + amountToGet + " units of " + oreType.oreName + ".  ";
 //		Debug.Log (missionInfoText);
 		//throw new System.NotImplementedException ();
 	}
@@ -209,20 +249,21 @@ public class FetchItemMission : MissionTemplate
 //		Debug.Log("fetch item mission generated");
 		if(started == false)
 		{
-		missionType = "Fetch Item";
-		itemType = GameObject.Find ("ItemList").GetComponent<ItemListInitializer>().fetchItem(Random.Range (0,1000));
-		amountToGet = Random.Range (10,25);
-		setFlavorText();
-		setMissionInfoText();
-		setPayout();
-		started = true;
+			missionType = "Fetch Item";
+			itemType = GameObject.Find ("ItemList").GetComponent<ItemListInitializer>().fetchItem(Random.Range (0,1000));
+			amountToGet = Random.Range (10,25);
+			setFlavorText();
+			setMissionInfoText();
+			setPayout();
+			missionName = "Fetch " + itemType.name;
+			started = true;
 		}
 		//throw new System.NotImplementedException ();
 	}
 
 	public override string getMissionProgress ()
 	{
-		return "Holding " + amountHeld + " out of " + amountToGet + " " + itemType.name;
+		return "Holding " + amountHeld + " out of " + amountToGet + " " + itemType.name + ".  ";
 	}
 
 	public override void updateProgress ()
@@ -246,7 +287,7 @@ public class FetchItemMission : MissionTemplate
 
 	public override void setPayout ()
 	{
-		throw new System.NotImplementedException ();
+		payout = (int)(amountToGet * itemType.baseValue * 1.75f);
 	}
 
 	#endregion
@@ -255,13 +296,30 @@ public class FetchItemMission : MissionTemplate
 
 	public override void setFlavorText ()
 	{
-		missionFlavorText = "not implemented yet, do it soon";
-		//throw new System.NotImplementedException ();
+		int randomNum = Random.Range (0,4);
+		switch (randomNum)
+		{
+		case 0:
+			missionFlavorText = "We need your help!  We are desperately low on " + itemType.name + "!  We will pay you handsomely for any you can find!  ";
+			break;
+		case 1:
+			missionFlavorText = "One of our researchers is looking to make a " + itemType.name + " replacement, but we are all out of " + itemType.name + "s!  ";
+			break;
+		case 2:
+			missionFlavorText = "If you happen across some " + itemType.name + "s on your travels, bring some here.  We are out and will pay big money for some!  ";
+			break;
+		case 3:
+			missionFlavorText = "One of our researchers needs some " + itemType.name + "s for personal reasons.  We will pay through the nose for some!  ";
+			break;
+		default:
+			missionFlavorText = "We need " + itemType.name + "s for reasons that don't concern you.  We will pay good money for what you bring us!  ";
+			break;
+		}
 	}
 
 	public override void setMissionInfoText ()
 	{
-		missionInfoText = "We need you to bring us " + amountToGet + " units of " + itemType.name;
+		missionInfoText = "We need you to bring us " + amountToGet + " units of " + itemType.name + ".  ";
 		//throw new System.NotImplementedException ();
 	}
 

@@ -11,6 +11,7 @@ public class StationGenerationTest : MonoBehaviour {
 	public GameObject corner;
 	public GameObject wallpiece;
 	public GameObject outerHallway;
+	public GameObject ceiling;
 	public bool doneUpdating = true;
 	public int roomWidth = 25;
 	public int roomHeight = 25;
@@ -234,6 +235,9 @@ public class StationGenerationTest : MonoBehaviour {
 			y += floorHeight;
 			yield return new WaitForSeconds(0);
 		}
+		GameObject newCeil = (GameObject) Instantiate(ceiling, new Vector3(37.5f,12f,37.5f),Quaternion.identity);
+		newCeil.transform.parent = this.transform;
+		newCeil.transform.localPosition = new Vector3(37.5f,12f,37.5f);
 		//	this.gameObject.SetActive(false);// = false;
 		//Debug.Log ("awesome");
 		//Debug.Log (this.transform.FindChild("StationShell(Clone)").transform.position);

@@ -261,17 +261,34 @@ public class PlayerStateFree : PlayerState
 		RaycastHit myHit;
 		if(Input.GetKey(KeyCode.E)  && menuLocked == false)
 		{
-			if(Physics.Raycast (transform.position,transform.forward, out myHit,1.5f))
+			if(Physics.Raycast (transform.position,transform.forward, out myHit,2.5f))
 			{
-//				Debug.Log (myHit.transform.name);
-				if(myHit.collider.gameObject.tag == "3dMenu")// = )//!myHit.collider.isTrigger)
+//				Debug.Log (myHit.collider.gameObject.tag);
+//				Debug.Log (myHit.collider.transform.name);
+				if(myHit.collider.gameObject.tag == "3dMenu") // = )//!myHit.collider.isTrigger)
 				{
 					StartCoroutine(timedMenuLock());
 //					Debug.Log ("switching to in menu state");
 					this.GetComponent<PlayerControl>().state = gameObject.AddComponent<PlayerStateInMenu>();
 					Destroy(this);
 				}
+				else if(myHit.collider.transform.parent != null)
+				{
+					if(myHit.collider.transform.parent.parent != null)
+					{
+						if(myHit.collider.transform.parent.parent.name == "ASContainer(Clone)")
+						{
+							StartCoroutine(timedMenuLock());
+							//					Debug.Log ("switching to in menu state");
+							this.GetComponent<PlayerControl>().state = gameObject.AddComponent<PlayerStateInMenu>();
+							Destroy(this);
+
+						}
+					}
+				}
 			}
+
+
 		}
 
 

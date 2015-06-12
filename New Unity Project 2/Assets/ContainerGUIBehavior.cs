@@ -27,7 +27,9 @@ public class ContainerGUIBehavior : MonoBehaviour {
 		playInv = player.transform.Find ("Inventory").GetComponent<PlayerInventory>();
 		contInv = transform.parent.GetComponent<ContainerInventory>();
 
-	
+//		Debug.Log (myRect.rect.width);
+//		Debug.Log (myRect2.rect.width);
+//		Debug.Log (itemButton.GetComponent<RectTransform>().rect.width);
 		//This object will be instantiated when pressing E over a container.
 		//when instantiated, display buttons for each of the items in the container
 		//from left to right then top to bottom.
@@ -53,8 +55,8 @@ public class ContainerGUIBehavior : MonoBehaviour {
 		int passCount = 0;
 		int buttonsInCont = panel.childCount;
 		int buttonsInPlay = otherPanel.childCount;
-		Debug.Log ("found " + buttonsInCont + " cont buttons");
-		Debug.Log ("found " + buttonsInPlay + " play buttons");
+//		Debug.Log ("found " + buttonsInCont + " cont buttons");
+//		Debug.Log ("found " + buttonsInPlay + " play buttons");
 		while(panel.childCount > 0)
 		{
 			buttonsDestroyed++;
@@ -85,10 +87,11 @@ public class ContainerGUIBehavior : MonoBehaviour {
 			for(int i = 0; i < contInv.items.Count;i++)
 			{
 				int index = i;
-//				Debug.Log ("creating button");
 				GameObject button = (GameObject) Instantiate(itemButton);
-				int maxCol = 3;
+//				Debug.Log (button.GetComponent<RectTransform>().rect.width);
+				int maxCol = (int)(myRect.rect.width / (itemButton.GetComponent<RectTransform>().rect.width));
 				int rowNum = 3;
+				//Debug.Log ("num cols = " + maxCol);
 				Item quickItem = new Item(contInv.items[index]);
 				//Debug.Log (quickItem.name + quickItem.count);
 				//if(itemCount * 80 > myRect.rect.width)
@@ -97,7 +100,7 @@ public class ContainerGUIBehavior : MonoBehaviour {
 				button.GetComponent<RectTransform>().anchorMax = new Vector2(0f,0f);
 				//Debug.Log (itemCount);
 				float xLoc =  ((itemCount%maxCol * 85)+ 50);
-				float yLoc = myRect.rect.height - (((int)(itemCount/2))* 85 + 50);
+				float yLoc = myRect.rect.height - (((int)(itemCount/maxCol))* 85 + 50);
 				button.transform.parent = panel.transform;
 				button.transform.localPosition = new Vector2(xLoc,yLoc);
 				button.transform.localScale = new Vector3(.8f,.8f,.8f);
@@ -128,7 +131,7 @@ public class ContainerGUIBehavior : MonoBehaviour {
 				int index = i;
 				//Debug.Log ("creating button");
 				GameObject button = (GameObject) Instantiate(itemButton);
-				int maxCol = 3;
+				int maxCol = (int)((myRect2.rect.width / (itemButton.GetComponent<RectTransform>().rect.width)));
 				int rowNum = 3;
 				Item quickItem = new Item(playInv.items[index]);
 				//Debug.Log (quickItem.name + quickItem.count);
@@ -138,7 +141,7 @@ public class ContainerGUIBehavior : MonoBehaviour {
 				button.GetComponent<RectTransform>().anchorMax = new Vector2(0f,0f);
 				//Debug.Log (itemCount);
 				float xLoc =  ((itemCount%maxCol * 85)+ 50);
-				float yLoc = myRect2.rect.height - (((int)(itemCount/2))* 85 + 50);
+				float yLoc = myRect2.rect.height - (((int)(itemCount/maxCol))* 85 + 50);
 				button.transform.parent = otherPanel.transform;
 				
 				button.transform.localPosition = new Vector2(xLoc,yLoc);
